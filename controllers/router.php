@@ -13,7 +13,18 @@ for($i = 0; $i < count($params); $i++){
 	$getVar[$variable] = $value;
 }
 
-print "The page your requested is '$page'";
-print '<br/>';
-$vars = print_r($getVar, TRUE);
-print "The following GET vars were passed to the page:<pre>".$vars."</pre>";
+$targetfile = SERVER_ROOT . '/controllers/' . $page . '.php';
+
+if(file_exists($targetfile)){
+	include_once($targetfile);
+	$className = ucfirst($page) . 'Controller';
+
+	if(class_exists($className)){
+		$controller = new $className;
+	}else{
+		die('class does not exist');
+	}
+}else{
+	die('file does not exist');
+}
+
