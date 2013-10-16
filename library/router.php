@@ -1,23 +1,42 @@
 <?php 
 
-print 'aaa';
+$request = $_SERVER[REQUEST_URI];
 
-$request = $_SERVER['QUERY_STRING'];
+$params = explode('/', $request);
 
-$params = explode('&', $request);
-
-$page = array_shift($params);
+array_shift($params); //remove MiAnswer
+array_shift($params); //remove MiAnswer
+array_shift($params); //remove index.php
 
 $getVar = array();
 
-for($i = 0; $i < count($params); $i++){
-	list($variable, $value) = explode('=', $params[$i]);
-	$getVar[$variable] = $value;
+$controller = array_shift($params);
+$action = array_shift($params);
+
+$queryString = $params;
+
+$controllerName = $controller;
+$controller = ucfirst($controller);
+$controller .= 'Controller';
+
+$controllerObject = new $controller;
+
+if((int)method_exists($controller, $action)){
+	call_user_func_array(array($controller, $action), $queryString);
 }
 
 
-print "The page your requested is '$page'";
-print '<br/>';
-$vars = print_r($getVar, TRUE);
-print "The following GET vars were passed to the page:<pre>".$vars."</pre>";
+/** Autoload any classes that are required **/
+
+function __autoload($className) {
+	if (file_exists(SERVER_ROOT .  '/library/' . strtolower($className) . '.class.php')) {
+		require_once(SERVER_ROOT . '/library/' . strtolower($className) . '.class.php');
+	} else if (file_exists(SERVER_ROOT  . '/application/' . '/controllers/' . strtolower($className) . '.php')) {
+		require_once(SERVER_ROOT . '/application/' . '/controllers/' . strtolower($className) . '.php');
+	} else if (file_exists(SERVER_ROOT  . '/application/' . '/models/'  . strtolower($className) . '.php')) {
+		require_once(SERVER_ROOT . '/application/' . '/models/' . strtolower($className) . '.php');
+	} else {
+		/* Error Generation Code Here */
+	}
+}
 
