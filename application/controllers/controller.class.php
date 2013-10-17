@@ -7,10 +7,12 @@ class Controller{
 	protected $_model;
 
 	function __construct($model, $controller, $action){
-		$this->$_controller = $controller;
-		$this->$_model = $model;
-		$this->$_action = $action;
-		$this->$_template = new Template($controller, $action);
+		$this->_controller = $controller;
+		$this->_model = $model;
+		$this->_action = $action;
+
+		$this->$model = new $model;
+//		$this->_template = new Template($controller, $action);
 	}
 
 	function set($name, $value){
