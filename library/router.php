@@ -19,7 +19,7 @@ function callMethod(){
 	$model = rtrim($controller, 's');
 	$controller .= 'Controller';
 
-	$controllerObject = new $controller($model, $controller, $action);
+	$controllerObject = new $controller($model, $controllerName, $action);
 
 	if((int)method_exists($controller, $action)){
 		call_user_func_array(array($controllerObject, $action), $queryString);
