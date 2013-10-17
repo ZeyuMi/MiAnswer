@@ -7,7 +7,7 @@
 
 	<body>
 		<p>
-			<?php echo $name?>Welcome you!
+			<?php echo $name?> Welcome you!
 		</p>
 	</body>
 </html>
