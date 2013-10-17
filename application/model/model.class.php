@@ -10,6 +10,5 @@ class Model extends SQLQuery{
 	}
 
 	function __destruct(){
-
 	}
 }

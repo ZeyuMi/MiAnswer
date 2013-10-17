@@ -1,12 +1,10 @@
 <?php 
 
-$request = $_SERVER[REQUEST_URI];
+$request = $_SERVER[PATH_INFO];
 
-$params = explode('/', $request);
 
-array_shift($params); //remove MiAnswer
-array_shift($params); //remove MiAnswer
-array_shift($params); //remove index.php
+$params = explode('/', substr($request,1));
+
 
 $getVar = array();
 
@@ -17,6 +15,7 @@ $queryString = $params;
 
 $controllerName = $controller;
 $controller = ucfirst($controller);
+$model = rtrim($controller, 's');
 $controller .= 'Controller';
 
 $controllerObject = new $controller;

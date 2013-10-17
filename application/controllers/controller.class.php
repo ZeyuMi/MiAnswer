@@ -1,11 +1,16 @@
 <?php
 
 class Controller{
+	protected $_controller;
+	protected $_action;
 	protected $_template;
 	protected $_model;
 
-	function __construct(){
-
+	function __construct($model, $controller, $action){
+		$this->$_controller = $controller;
+		$this->$_model = $model;
+		$this->$_action = $action;
+		$this->$_template = new Template($controller, $action);
 	}
 
 	function set($name, $value){
