@@ -20,6 +20,8 @@ function __autoload($className) {
 		require_once(SERVER_ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.class.php');
 	} else if (file_exists(SERVER_ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.class.php')) {
 		require_once(SERVER_ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.class.php');
+	} else if (file_exists(SERVER_ROOT . DS . 'application' . DS . 'views' . DS . strtolower($className) . '.class.php')) {
+		require_once(SERVER_ROOT . DS . 'application' . DS . 'views' . DS . strtolower($className) . '.class.php');
 	} else {
 		/* Error Generation Code Here */
 	}

@@ -12,15 +12,15 @@ class Controller{
 		$this->_action = $action;
 
 		$this->$model = new $model;
-//		$this->_template = new Template($controller, $action);
+		$this->_template = new Template($controller, $action);
 	}
 
 	function set($name, $value){
-		$this->$_template->set($name, $value);
+		$this->_template->set($name, $value);
 	}
 
 	function __destruct(){
-		$this->$_template->render();
+		$this->_template->render();
 	}
 	
 }
