@@ -1,5 +1,5 @@
 <?php
 
-require_once(SERVER_ROOT . '/config/' . 'config.php');
-require_once(SERVER_ROOT . '/library/' . 'shared.php');
-require_once(SERVER_ROOT . '/library/' . 'router.php');
+require_once(SERVER_ROOT . DS . 'config' . DS . 'config.php');
+require_once(SERVER_ROOT . DS .  'library' . DS . 'shared.php');
+require_once(SERVER_ROOT . DS . 'library' . DS . 'router.php');
