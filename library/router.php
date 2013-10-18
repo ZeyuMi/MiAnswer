@@ -3,7 +3,6 @@
 function callMethod(){
 	global $default;
 	$request = $_SERVER[PATH_INFO];
-	$queryString = array();
 	if(!isset($request)){
 		$controller = $default['controller'];
 		$action = $default['action'];
@@ -16,10 +15,6 @@ function callMethod(){
 			$action = array_shift($params);
 		}else
 			$action = 'index';
-		if($_SERVER['REQUEST_METHOD'] == 'GET')
-			$queryString = $_GET;
-		if($_SERVER['REQUEST_METHOD'] == 'POST')
-			$queryString = $_POST;
 	}
 
 	$controllerName = $controller;
@@ -27,9 +22,9 @@ function callMethod(){
 	$controller .= 'Controller';
 
 	$controllerObject = new $controller($controllerName, $action);
-
+	
 	if((int)method_exists($controller, $action)){
-		call_user_func_array(array($controllerObject, $action), $queryString);
+		$controllerObject->$action();	
 	}
 }
 
