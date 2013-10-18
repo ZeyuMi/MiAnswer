@@ -21,10 +21,9 @@ function callMethod(){
 
 	$controllerName = $controller;
 	$controller = ucfirst($controller);
-	$model = rtrim($controller, 's');
 	$controller .= 'Controller';
 
-	$controllerObject = new $controller($model, $controllerName, $action);
+	$controllerObject = new $controller($controllerName, $action);
 
 	if((int)method_exists($controller, $action)){
 		call_user_func_array(array($controllerObject, $action), $queryString);

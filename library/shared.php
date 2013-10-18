@@ -11,6 +11,12 @@ function setReporting() {
 	}
 }
 
+function performAction($controller, $action, $queryString = null){
+	$controllerName = ucfirst($controller).'Controller';
+	$controllerObject = new $controllerName($controller, $action);
+	return call_user_func_array(array($controllerObject, $action), $queryString);
+}
+
 /** Autoload any classes that are required **/
 
 function __autoload($className) {

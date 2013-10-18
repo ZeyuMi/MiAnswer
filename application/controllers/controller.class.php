@@ -6,11 +6,10 @@ class Controller{
 	protected $_template;
 	protected $_model;
 
-	function __construct($model, $controller, $action){
+	function __construct($controller, $action){
 		$this->_controller = $controller;
-		$this->_model = $model;
 		$this->_action = $action;
-
+		$model = trim(ucfirst($controller),'s');
 		$this->$model = new $model;
 		$this->_template = new Template($controller, $action);
 	}
