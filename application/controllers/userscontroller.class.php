@@ -7,4 +7,5 @@ class UsersController extends Controller{
 		$result = $this->User->query($sql,1);
 		$this->set('name', $result['User']['uname']);
 	}
+
 }
