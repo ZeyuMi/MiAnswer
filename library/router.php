@@ -16,7 +16,10 @@ function callMethod(){
 			$action = array_shift($params);
 		}else
 			$action = 'index';
-		$queryString = $params;
+		if($_SERVER['REQUEST_METHOD'] == 'GET')
+			$queryString = $_GET;
+		if($_SERVER['REQUEST_METHOD'] == 'POST')
+			$queryString = $_POST;
 	}
 
 	$controllerName = $controller;
