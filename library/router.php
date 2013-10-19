@@ -23,7 +23,7 @@ $controller .= 'Controller';
 $controllerObject = new $controller($controllerName, $action);
 $template = new Template($controllerName, $action);	
 if((int)method_exists($controller, $action)){
-	call_user_func(array($controllerObject, $action));
+	$controllerObject->$action($template);
 }
 $template->render();
 
