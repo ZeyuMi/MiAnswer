@@ -1,23 +1,17 @@
 <?php
 
 class Template{
-	protected $_controller;
-	protected $_action;
-	protected $variables = array();
-
-	function __construct($controller, $action){
-		$this->_controller = $controller;
-		$this->_action = $action;
-	}
-
-	function set($name, $value){
-		$this->variables[$name] = $value;
+	protected $_view;
+	
+	function __construct($view){
+		$this->_view = $view;
 	}
 
 	function render(){
-		extract($this->variables);
+		global $variables;
+		extract($variables);
 
-		include(SERVER_ROOT . DS . 'application' . DS . 'views' . DS  . $this->_controller . DS . $this->_action . '.php');
+		include(SERVER_ROOT . DS . 'application' . DS . 'views' . DS  . $this->_view . DS . '.php');
 	}
 
 }

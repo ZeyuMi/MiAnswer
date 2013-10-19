@@ -15,7 +15,6 @@ class SQLQuery{
 
 	function query($sql, $singleResult = 0){
 		$this->_result = mysqli_query($this->_dbHandle, $sql);
-
 		if (preg_match("/select/i",$sql)) {
 			$result = array();
 			$table = array();

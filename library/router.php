@@ -21,9 +21,10 @@ $controller = ucfirst($controller);
 $controller .= 'Controller';
 
 $controllerObject = new $controller($controllerName, $action);
-$template = new Template($controllerName, $action);	
+$variables = array();	
 if((int)method_exists($controller, $action)){
-	$controllerObject->$action($template);
+	$result = $controllerObject->$action();
+	$template =  new Template($routingTable[$controllerName][$action][$result]);
+	$template->render();
 }
-$template->render();
 
