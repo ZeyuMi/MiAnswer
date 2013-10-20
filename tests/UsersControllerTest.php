@@ -22,6 +22,8 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$controller = new UsersController($controllerName,$action);
 		$result = $controller->$action();
 		$this->assertEquals('test',$variables['uname']);
+		$this->assertEquals('1',$_SESSION['uid']);
+		$this->assertEquals('test',$_SESSION['uname']);
 		$this->assertEquals('success', $result);
 		$variables = array();
 	}
@@ -97,27 +99,30 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 
 	}
 
-	function testRegisterSuccessfully(){
-		global $variables;
-		$_POST['uid'] = '4';
-		$_POST['password'] = 'test';
-		$_POST['uname'] = 'test';
-		$controllerName = 'users';
-		$action = "register";
-		$controller = new UsersController($controllerName,$action);
-		$result = $controller->$action();
-		$this->assertEquals('success', $result);	
-		
-		$_POST['uid']= '4';
-		$_POST['password'] = 'test';
-		$controllerName = 'users';
-		$action = 'login';
-		$controller = new UsersController($controllerName,$action);
-		$result = $controller->$action();
-		$this->assertEquals('test',$variables['uname']);
-		$this->assertEquals('success', $result);
-		$variables = array();
-	}
+//	/**
+//	* Before run this test, make sure there is no record in table users with uid equaling to '4'
+//	**/
+//	function testRegisterSuccessfully(){
+//		global $variables;
+//		$_POST['uid'] = '4';
+//		$_POST['password'] = 'test';
+//		$_POST['uname'] = 'test';
+//		$controllerName = 'users';
+//		$action = "register";
+//		$controller = new UsersController($controllerName,$action);
+//		$result = $controller->$action();
+//		$this->assertEquals('success', $result);	
+//		
+//		$_POST['uid']= '4';
+//		$_POST['password'] = 'test';
+//		$controllerName = 'users';
+//		$action = 'login';
+//		$controller = new UsersController($controllerName,$action);
+//		$result = $controller->$action();
+//		$this->assertEquals('test',$variables['uname']);
+//		$this->assertEquals('success', $result);
+//		$variables = array();
+//	}
 
 	function testRegisterFailed(){
 		global $variables;
@@ -131,4 +136,167 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('fail', $result);	
 		$variables = array();
 	}
+
+	function testValidateTrue(){
+		$controllerName = 'users';
+		$action = "validate";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('1', 'test');
+		$this->assertEquals(True, $result);	
+	}
+
+	function testValidateFalseNoUser(){
+		$controllerName = 'users';
+		$action = "validate";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('-1','test');
+		$this->assertEquals(False, $result);	
+	}
+
+	function testValidateFalseWrongPwd(){
+		$controllerName = 'users';
+		$action = "validate";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('1','psw');
+		$this->assertEquals(False, $result);	
+	}
+
+	function testPersonalInfoSuccessfully(){
+		$controllerName = 'users';
+		$action = "personalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('1');
+		$this->assertEquals('1', $result['User']['uid']);
+		$this->assertEquals('test', $result['User']['uname']);
+		$this->assertEquals('test', $result['User']['password']);
+		$this->assertEquals('description', $result['User']['description']);
+		$this->assertEquals('10', $result['User']['scores']);
+		$this->assertEquals('0', $result['User']['level']);
+	}
+
+	function testPersonalInfoFailed(){
+		$controllerName = 'users';
+		$action = "personalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('-1');
+		$this->assertEquals(0, count($result));
+	}
+
+	function testCheckIdtySuccessfully(){
+		$_POST['uid'] = '1';
+		$_POST['password'] = 'test';
+		$controllerName = 'users';
+		$action = "checkIdty";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+	}
+
+	function testCheckIdtyNoUser(){
+		$_POST['uid'] = '-1';
+		$_POST['password'] = 'test';
+		$controllerName = 'users';
+		$action = "checkIdty";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+	}
+
+	function testcheckIdtyWrongpsw(){
+		$_POST['uid'] = '1';
+		$_POST['password'] = 'test2';
+		$controllername = 'users';
+		$action = "checkIdty";
+		$controller = new userscontroller($controllername,$action);
+		$result = $controller->$action();
+		$this->assertequals('fail', $result);
+	}
+
+	function testExistSuccessfully(){
+		$controllername = 'users';
+		$action = "exist";
+		$controller = new userscontroller($controllername,$action);
+		$result = $controller->$action('1');
+		$this->assertequals(TRUE, $result);
+	}
+
+	function testExistFailed(){
+		$controllername = 'users';
+		$action = "exist";
+		$controller = new userscontroller($controllername,$action);
+		$result = $controller->$action('-1');
+		$this->assertequals(FALSE, $result);
+	}
+
+	function testEditPersonalInfoSuccessfully(){
+		$_SESSION['uid'] = '1';
+		$_POST['uid'] = '1';
+		$_POST['password'] = 'test2';
+		$_POST['uname'] = 'test2';
+		$_POST['description'] = 'description2';
+		$controllerName = 'users';
+		$action = "editPersonalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+
+		$controllerName = 'users';
+		$action = "personalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('1');
+		$this->assertEquals('1', $result['User']['uid']);
+		$this->assertEquals('test2', $result['User']['uname']);
+		$this->assertEquals('test2', $result['User']['password']);
+		$this->assertEquals('description2', $result['User']['description']);
+		$this->assertEquals('10', $result['User']['scores']);
+
+		$_SESSION['uid'] = '1';
+		$_POST['uid'] = '1';
+		$_POST['password'] = 'test';
+		$_POST['uname'] = 'test';
+		$_POST['description'] = 'description';
+		$controllerName = 'users';
+		$action = "editPersonalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+
+		$controllerName = 'users';
+		$action = "personalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action('1');
+		$this->assertEquals('1', $result['User']['uid']);
+		$this->assertEquals('test', $result['User']['uname']);
+		$this->assertEquals('test', $result['User']['password']);
+		$this->assertEquals('description', $result['User']['description']);
+		$this->assertEquals('10', $result['User']['scores']);
+		$this->assertEquals('0', $result['User']['level']);
+	}
+
+	function testEditPersonalInfoNoUser(){
+		$_SESSION['uid'] = '-1';
+		$_POST['uid'] = '-1';
+		$_POST['password'] = 'test2';
+		$_POST['uname'] = 'test2';
+		$_POST['description'] = 'description2';
+		$controllerName = 'users';
+		$action = "editPersonalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+	}
+
+	function testEditPersonalInfoWrongUser(){
+		$_SESSION['uid'] = '2';
+		$_POST['uid'] = '1';
+		$_POST['password'] = 'test2';
+		$_POST['uname'] = 'test2';
+		$_POST['description'] = 'description2';
+		$controllerName = 'users';
+		$action = "editPersonalInfo";
+		$controller = new UsersController($controllerName,$action);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+	}
+
 }
