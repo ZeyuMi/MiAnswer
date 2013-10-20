@@ -2,16 +2,29 @@
 
 class UsersController extends Controller{
 
-	function signup(){
-
+	/**
+	* check if a user exists with the password passed in
+	**/
+	function checkIdty(){
+		$userid = $_POST['uid'];
+		$password = $_POST['password'];
+		$result = $this->validate($userid, $password);
+		if($result)
+			return 'success';
+		else
+			return 'fail';	
 	}
 
+	
 	function login(){
-		global $variables;	
-		$sql = "select uname from users where uid='" . $_POST['uid'] . "' and password='" . $_POST['password'] . "';";
-		$result = $this->User->query($sql,1);
-		if(count($result)> 0){
+		global $variables;
+		$values = array();	
+		$result = $this->validate($_POST['uid'], $_POST['password']);
+		if($result){
+			$result =$this->personalInfo($_POST['uid']);
 			$variables['uname'] = $result['User']['uname'];
+			$_SESSION['uid'] = $result['User']['uid'];
+			$_SESSION['uname'] = $result['User']['uname'];
 			return 'success';
 		}else{
 			$_SESSION['type'] = 'error';
@@ -19,11 +32,14 @@ class UsersController extends Controller{
 		}
 	}
 
+	/**
+	* return all the info related this user
+	* including personal info, topics and answers
+	**/
 	function info(){
 		global $variables;
 		$userid = $_GET['uid'];
-		$sql = "select uname, description, scores, level from users where uid='$userid';";
-		$result = $this->User->query($sql, 1);
+		$result = $this->personalInfo($userid);
 		if(count($result) > 0){ // user exists
 			$variables['userinfo'] = $result;
 			//fetch topics related to this id
@@ -41,6 +57,9 @@ class UsersController extends Controller{
 		}
 	}
 
+	/**
+	* if the user has already existed, this function will fail
+	**/
 	function register(){
 		global $variables;
 		$userid = $_POST['uid'];
@@ -54,4 +73,48 @@ class UsersController extends Controller{
 		$this->User->query($sql);
 		return 'success';
 	}
+
+
+	function editPersonalInfo(){
+		$userNow = $_SESSION['uid'];
+		$userid = $_POST['uid'];
+		$uname = $_POST['uname'];
+		$password = $_POST['password'];
+		$description = $_POST['description'];
+		$result = $this->exist($userid);
+		if($result && ($userNow == $userid)){
+			$sql = "update users set uname='$uname', password='$password', description='$description' where uid='$userid';";
+			$this->User->query($sql);
+			return 'success';
+		}else{
+			return 'fail';
+		}
+	}
+
+	function exist($userid){
+		$sql = "select uname from users where uid='$userid';";
+		$result = $this->User->query($sql,1);
+		if(count($result)> 0){
+			return True;
+		}else{
+			return False;
+		}
+	}
+
+	function validate($userid, $password){
+		$sql = "select uname from users where uid='$userid' and password='$password';";
+		$result = $this->User->query($sql,1);
+		if(count($result)> 0){
+			return True;
+		}else{
+			return False;
+		}
+	}
+	
+	function personalInfo($userid){
+		$sql = "select uid, uname, description, password, scores, level from users where uid='$userid';";
+		$result = $this->User->query($sql,1);
+		return $result;
+	}
+
 }
