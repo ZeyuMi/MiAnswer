@@ -247,20 +247,23 @@
 		</div>
 			
 	</div>
-	<div class="modal hide fade" id="login">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		</div>
-		<div class="modal-body">
-			<div class="col-lg-10">
-				<input type="username" class="form-control" id="inputUsersName" placeholder="您的用户名">
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">登陆</h4>
+				</div>
+				<div class="modal-body">
+					<input type="username" class="form-control" id="inputUsersName" placeholder="您的用户名">
+					<input type="password" class="form-control" id="inputPassword" placeholder="您的密码">
+				</div>
+				<div class="modal-footer">
+					<p><button class="btn btn-primary" type="submit">登陆</button>
+						<button class="btn btn-defualt" data-dismiss="modal" aria-hidden="true">取消</button></p>
+				</div>
 			</div>
-			<div class="col-lg-10">
-				<input type="password" class="form-control" id="inputPassword" placeholder="您的密码">
-			</div>
-			<button class="btn btn-primary" type="submit">登陆</button>
-			<button class="btn btn-defualt" data-dismiss="modal" aria-hidden="true">取消</button>
-		</div>
+	</div>
 	</div><!-- /.modal -->
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/bootstrap.js"></script>
