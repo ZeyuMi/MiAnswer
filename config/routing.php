@@ -7,7 +7,7 @@ $default['action'] = 'login';
 $routingTable = array(
 	'users' => array(
 				'login' => array(
-							'success' => '',
+							'success' => 'hello.php',
 							'fail'    => '',
 						),
 				'signup' => array(

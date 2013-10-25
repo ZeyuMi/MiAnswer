@@ -178,9 +178,9 @@
 				    <h4 class="form-signin-heading">请登录</h4>
 				</div>
 				<div class="modal-body">
-				<form class="form-signin">
-				    <input type="text" class="form-control" placeholder="邮箱" autofocus="">
-				    <input type="password" class="form-control" placeholder="密码">
+				<form action="../index.php/users/login" method="post" class="form-signin">
+				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="">
+				    <input type="password" class="form-control" name="password"placeholder="密码">
 			        <label class="checkbox">
 						<input type="checkbox" value="remember-me"> 记住我
 					</label>
