@@ -42,7 +42,7 @@
 				</li>-->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
+				<li><a href="#register" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
 				<li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>登录</a></li>
 			<!--	<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-info-sign"></span> Reservation<b class="caret"></b></a>
@@ -299,8 +299,31 @@
 				</form>
 				</div>
 			</div>
-	</div>
+		</div>
 	</div><!-- /.modal -->
+	<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h4 class="form-signin-heading">填写注册信息</h4>
+				</div>
+				<div class="modal-body">
+				<form action="../index.php/users/register" method="post" class="form-signin">
+				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="">
+				    <input type="text" class="form-control" name="uname" placeholder="用户名" autofocus="">
+				    <input type="password" class="form-control" name="password" placeholder="密码">
+				    <input type="password" class="form-control" name="passwordverify" placeholder="密码">
+			        <label class="checkbox">
+						<input type="checkbox" value="remember-me"> 记住我
+					</label>
+					<button class="btn btn-primary btn-block" type="submit">注册</button>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.modal -->
+
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
