@@ -44,7 +44,14 @@ body {
 }
 
 .answer-content{
+	position:relative;
 	padding-left:70px;
+	padding-bottom:20px;
+}
+
+.post-content{
+	position:relative;
+	padding-left:90px;
 }
 
 .uparrow{
@@ -86,7 +93,21 @@ body {
 	padding:19px;
 	border-bottom: 1px solid #eee;
 }
+#anonymous{
+	position:relative;
+	top:0px;
+	left:650px;
+}
+.post-btn{
+	position:relative;
+	left:660px;
+	top:0px;
+}
 
+#post-area{
+	width:760px;
+	resize:none;
+}
 .form-element{
 	margin-bottom:15px;
 }
