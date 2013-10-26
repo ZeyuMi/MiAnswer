@@ -4,3 +4,96 @@
 body {
 	padding-top: 65px;
 }
+
+.date-wrap{
+	color:#999;
+}
+
+.upcount{
+	position:absolute;
+	top:23px;
+	left:0px;
+	width:100%;
+}
+
+.downcount{
+	position:absolute;
+	top:5px;
+	left:0px;
+	width:100%;
+}
+
+.downicon{
+	position:absolute;
+	left:0px;
+	top:29px;
+	width:100%;
+}
+
+.upicon{
+	position:absolute;
+	left:0px;
+	top:5px;
+	width:100%;
+}
+
+.votebar{
+	position:absolute;
+	left:22px;
+	top:17px;
+}
+
+.answer-content{
+	padding-left:70px;
+}
+
+.uparrow{
+	position:relative;
+	height:50px;
+	width:50px;
+	margin-bottom:5px;
+	color:#698ebf;
+	border-radius: 3px;
+	background: #eff6fa;
+	border: 0;
+}
+
+.downarrow{
+	position:absolute;
+	left:0px;
+	top:57px;
+	height:50px;
+	width:50px;
+	margin-bottom:5px;
+	color:#698ebf;
+	border-radius: 3px;
+	background: #eff6fa;
+	border: 0;
+}
+.arrow{
+	position:relative;
+	height:50px;
+	margin-bottom:5px;
+	color:#698ebf;
+	border-radius: 3px;
+	background: #eff6fa;
+	border: 0;
+}
+
+
+.answer-wrap{
+	position:relative;
+	padding:19px;
+	border-bottom: 1px solid #eee;
+}
+
+.form-element{
+	margin-bottom:15px;
+}
+.modal-content {
+	background:#eee;
+}
+
+.mywidth{
+	width:538px;
+}
