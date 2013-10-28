@@ -2,9 +2,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Bootstrap test1</title>
+	<title>具体问题</title>
 	<link rel="stylesheet" type="text/css" href="css/customstyle.css">
 	<link rel="stylesheet" type="text/css" href="css/signin.css">
+	<link rel="stylesheet" type="text/css" href="css/answer.css">
 </head>
 <body>
 <nav class="navbar-wrapper navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -29,8 +30,8 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="#"><span class="glyphicon glyphicon-question-sign"></span>问题</a></li>
-				<li class="active"><a href="#"><span class="glyphicon glyphicon-star"></span>回答</a></li>
+				<li class="active"><a href="#"><span class="glyphicon glyphicon-question-sign"></span>问题</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-star"></span>回答</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-tags"></span>标签</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span>用户</a></li>
 				<!--<li class="dropdown">
@@ -41,8 +42,9 @@
 					</ul>
 				</li>-->
 			</ul>
+			<button class="btn btn-primary navbar-btn"><a href="#postquestion" data-toggle="modal">提问</a></button>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
+				<li><a href="#register" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
 				<li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>登录</a></li>
 			<!--	<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-info-sign"></span> Reservation<b class="caret"></b></a>
@@ -68,6 +70,7 @@
 						</div>
 						<h3>《红楼梦》第十三回为何删去“秦可卿淫丧天香楼”？</h3>
 						<p>她是怎么死的，投缳么？脂砚斋评石头记里并未讲明，也是云山雾罩，唬得人发懵，有没有人知道是什么原因导致了她的死亡？自杀，抑或他杀？请勿推荐刘心武老师的《红楼望月》类的书，在此希望亲们能本着脂评石头记的批语来作答，兴许会比较好~~</p>
+						<img src="img/example.jpg"></img>
 				</div>
 				<div class="row">
 					<div class="answer-wrap">
@@ -87,6 +90,7 @@
 								<strong>，我从没被谁知道，所以也没被谁忘记。</strong>
 							</div>
 							<p>脂砚斋”通面将可卿如何死故意隐去是大发慈悲心也叹叹“”“秦可卿淫丧天香楼作者用史笔也，老朽因有魂托凤姐贾家后事二件嫡是安富贵荣坐享人能想得到处其事虽未漏其言其意则令人悲切感服姑赦之因命芹溪删去”读到此，还不明白原因吗？</p>
+							<img src="img/example.jpg"></img>
 							<span class="date-wrap">2012-11-14</span>
 						</div>
 					</div>
@@ -266,7 +270,52 @@
 				</form>
 				</div>
 			</div>
-	</div>
+		</div>
+	</div><!-- /.modal -->
+	<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h4 class="form-signin-heading">填写注册信息</h4>
+				</div>
+				<div class="modal-body">
+				<form action="../index.php/users/register" method="post" class="form-signin">
+				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="">
+				    <input type="text" class="form-control" name="uname" placeholder="用户名" autofocus="">
+				    <input type="password" class="form-control" name="password" placeholder="密码">
+				    <input type="password" class="form-control" name="passwordverify" placeholder="再次输入密码">
+			        <label class="checkbox">
+						<input type="checkbox" value="remember-me"> 记住我
+					</label>
+					<button class="btn btn-primary btn-block" type="submit">注册</button>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.modal -->
+	<div class="modal fade" id="postquestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h4 class="form-signin-heading">提问</h4>
+				</div>
+				<div class="modal-body">
+				<form action="../index.php/users/register" method="post" class="form-inline">
+				    <input type="text" class="form-control mywidth form-element" name="tname" placeholder="写下你的问题" autofocus="">
+					<label for="detailedInfo"> 写下详细的信息</label>
+					<textarea id="detailedInfo" class="form-control mywidth form-element" style="height:200px" ></textarea>
+					<label for="tags">标签</label>
+				    <input type="text" class="form-control mywidth form-element" id="tags" placeholder="用空格分开不同的标签">
+			        <label class="checkbox">
+						<input type="checkbox" value="remember-me"> 匿名
+					</label>
+					<button class="btn btn-primary btn-block" type="submit">发布</button>
+				</form>
+				</div>
+			</div>
+		</div>
 	</div><!-- /.modal -->
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/bootstrap.js"></script>
