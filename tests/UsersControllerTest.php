@@ -58,7 +58,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$result	= $controller->$action();
 		$this->assertEquals('u1', $variables['userinfo']['User']['uname']);
 		$this->assertEquals('description1', $variables['userinfo']['User']['description']);
-		$this->assertEquals('5', $variables['userinfo']['User']['scores']);
+		$this->assertEquals(5, $variables['userinfo']['User']['scores']);
 		$this->assertEquals('1', $variables['userinfo']['User']['level']);
 		$this->assertEquals('topic1', $variables['topics'][0]['Topic']['title']);
 		$this->assertEquals('details1', $variables['topics'][0]['Topic']['details']);

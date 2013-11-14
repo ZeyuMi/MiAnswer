@@ -17,11 +17,11 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$controller = new TopicsController($controllerName,$action);
 		$result = $controller->$action(1);
 		$this->assertEquals(1, $result['Topic']['tid']);	
-		$this->assertEquals(1, $result['Topic']['uid']);	
-		$this->assertEquals('TopicName1', $result['Topic']['title']);	
-		$this->assertEquals('here is details', $result['Topic']['details']);	
-		$this->assertEquals('2013-11-13 18:00:00', $result['Topic']['time']);	
-		$this->assertEquals(5, $result['Topic']['scores']);	
+		$this->assertEquals('u1', $result['Topic']['uid']);	
+		$this->assertEquals('topic1', $result['Topic']['title']);	
+		$this->assertEquals('details1', $result['Topic']['details']);	
+		$this->assertEquals('2013-11-14 09:40:00', $result['Topic']['time']);	
+		$this->assertEquals(20, $result['Topic']['scores']);	
 		$this->assertEquals(1, $result['Topic']['active']);	
 	}	
 
@@ -32,7 +32,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$controllerName = 'topics';
 		$action = 'getTopicByID';
 		$controller = new TopicsController($controllerName,$action);
-		$result = $controller->$action(2);
+		$result = $controller->$action(3);
 		$this->assertEquals(NULL, $result);	
 	}
 
@@ -47,26 +47,27 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$controller = new TopicsController($controllerName,$action);
 		$result	= $controller->$action();
 		$this->assertEquals(1, $variables['topicinfo']['Topic']['tid']);	
-		$this->assertEquals(1, $variables['topicinfo']['Topic']['uid']);	
-		$this->assertEquals('TopicName1', $variables['topicinfo']['Topic']['title']);	
-		$this->assertEquals('here is details', $variables['topicinfo']['Topic']['details']);	
-		$this->assertEquals('2013-11-13 18:00:00', $variables['topicinfo']['Topic']['time']);	
-		$this->assertEquals(5, $variables['topicinfo']['Topic']['scores']);	
+		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
+		$this->assertEquals('topic11', $variables['topicinfo']['Topic']['title']);	
+		$this->assertEquals('details1', $variables['topicinfo']['Topic']['details']);	
+		$this->assertEquals('2013-11-14 09:40:00', $variables['topicinfo']['Topic']['time']);	
+		$this->assertEquals(20, $variables['topicinfo']['Topic']['scores']);	
 		$this->assertEquals(1, $variables['topicinfo']['Topic']['active']);	
 		/*then test user info who post this topic*/
-		$this->assertEquals(1, $variables['userinfo']['User']['uid']);	
-		$this->assertEquals('test', $variables['userinfo']['User']['uname']);	
-		$this->assertEquals(1, $variables['answers'][0]['Answer']['aid']);
+		$this->assertEquals('u1', $variables['userinfo']['User']['uid']);	
+		$this->assertEquals('u1', $variables['userinfo']['User']['uname']);	
 
 		/*test answers related to this topic*/
-		$this->assertEquals('answer1', $variables['answers'][0]['Answer']['details']);
-		$this->assertEquals('2013-11-13 20:00:00', $variables['answers'][0]['Answer']['time']);
-		$this->assertEquals(2, $variables['answers'][0]['User']['uid']);
-		$this->assertEquals('user2', $variables['answers'][0]['User']['uname']);
-		$this->assertEquals('answer2', $variables['answers'][1]['Answer']['details']);
-		$this->assertEquals('2013-11-13 21:00:00', $variables['answers'][1]['Answer']['time']);
-		$this->assertEquals(3, $variables['answers'][1]['User']['uid']);
-		$this->assertEquals('user3', $variables['answers'][1]['User']['uname']);
+		$this->assertEquals(1, $variables['answers'][0]['Answer']['aid']);
+		$this->assertEquals('answer1details', $variables['answers'][0]['Answer']['details']);
+		$this->assertEquals('2013-11-15 12:00:00', $variables['answers'][0]['Answer']['time']);
+		$this->assertEquals('u1', $variables['answers'][0]['User']['uid']);
+		$this->assertEquals('u1', $variables['answers'][0]['User']['uname']);
+		$this->assertEquals(2, $variables['answers'][0]['Answer']['aid']);
+		$this->assertEquals('answer2details', $variables['answers'][1]['Answer']['details']);
+		$this->assertEquals('2013-11-15 12:45:00', $variables['answers'][1]['Answer']['time']);
+		$this->assertEquals('u2', $variables['answers'][1]['User']['uid']);
+		$this->assertEquals('u2', $variables['answers'][1]['User']['uname']);
 		$this->assertEquals('success', $result);
 		$variables = array();
 	}
@@ -76,7 +77,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 	*/
 	function testShowSuccessfully(){
 		global $variables;
-		$_POST['tid'] = 2;
+		$_POST['tid'] = 3;
 		$controllerName = 'topics';
 		$action = 'show';
 		$controller = new TopicsController($controllerName,$action);
