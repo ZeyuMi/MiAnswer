@@ -65,7 +65,7 @@ class UsersController extends Controller{
 		$userid = $_POST['uid'];
 		$uname = $_POST['uname'];
 		$password = $_POST['password'];
-		$sql = "select * from users where uid=$userid;";
+		$sql = "select * from users where uid='$userid';";
 		$result = $this->User->query($sql);
 		if(count($result) > 0)
 			return 'fail';
