@@ -1,9 +1,14 @@
 drop database MiAnswer;
 create database MiAnswer;
 use MiAnswer;
-create table users(uid varchar(255) primary key, uname varchar(255) not null, password varchar(255) not null, description varchar(255), scores int default 0, level int default 0);
+create table users(uid varchar(255) primary key, uname varchar(255) not null, password varchar(255) not null, description varchar(255), bigimage varchar(255), smallimage varchar(255), scores int default 0, level int default 0);
 create table topics(tid int primary key auto_increment, uid varchar(255) not null, title varchar(255) not null, details text, time datetime not null, scores int default 0, active int default 1);
+create table topicimages(imid primary key auto_increment, imagelocation varchar(255) not null, tid not null);
+create table answerimages(imid primary key auto_increment, imagelocation varchar(255) not null, aid not null);
 create table answers(aid int primary key auto_increment, uid varchar(255) not null, tid int not null, details text not null, time datetime not null);
 create table comments(cid int primary key auto_increment, uid varchar(255) not null, aid int not null, details text not null, time datetime not null);
 create table tags(tagid int primary key auto_increment, tname varchar(255) not null);
 create table topictagrelations(tid int not null, tagid int not null, primary key(tid, tagid));
+insert into users(uid, uname, password, description, bigimage, smallimage, scores, level) values ('u1', 'u1', 'u1', 'description1', 'default', 'default', 5, 1), ('u2', 'u2', 'u2', 'description2', 'default', 'default', 5, 1),  ('u3', 'u3', 'u3', 'description3', 'default', 'default', 5, 1),  ('u4', 'u4', 'u4', 'description4', 'default', 'default', 5, 1);
+insert into topics(tid, uid, title, details, time, scores, active) values(1, 'u1', 'topic1', 'details1', '2013-11-14 09:40:00', 20, 1), (2, 'u2', 'topic2', 'details2', '2013-11-12 09:00:00', 30, 0);
+insert into answers(aid, uid, tid, details, time) values(1, '');
