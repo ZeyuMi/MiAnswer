@@ -75,7 +75,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 	/*
 	  Test show when topic does not exist
 	*/
-	function testShowSuccessfully(){
+	function testShowNoTopic(){
 		global $variables;
 		$_POST['tid'] = 3;
 		$controllerName = 'topics';
@@ -86,8 +86,51 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$variables = array();
 	}
 
+	/*
+	  Test getTopicsByUserid successfully
+	  getTopicsByUserid only return id of each topic
+	*/
+	function testGetTopicsByUseridSuccessfully(){
+		$controllerName = 'topics';
+		$action = 'getTopicByUserid';
+		$controller = new TopicsController($controllerName, $action);
+		$reuslt = $controller->$action('u1');
+		$this->assertEquals(1, $result['topics'][0]['Topic']['tid']);
+	}
 
-	
+
+	function testGetTopicsbyUseridNoTopic(){
+		$controllerName = 'topics';
+		$action = 'getTopicByUserid';
+		$controller = new TopicsController($controllerName, $action);
+		$reuslt = $controller->$action('u3');
+		$this->assertEquals(NULL, $result);
+	}
 
 
+	function testGetTopicsbyUseridNoUser(){
+		$controllerName = 'topics';
+		$action = 'getTopicByUserid';
+		$controller = new TopicsController($controllerName, $action);
+		$reuslt = $controller->$action('-1');
+		$this->assertEquals(NULL, $result);
+	}
+
+	/*
+	  Test function which returns hottest topics of different type including month, week and day, determined by a parameter type.
+	*/
+	function testGetHottestTopicsByType(){
+		$controllerName = 'topics';
+		$action = 'getHottestTopicsByType';
+		$controller = new TopicsController($controllerName, $action);
+		$result = $controller->$action('Month');
+		$this->assertEquals(1, $result[0]['Topic']['tid']);
+		$this->assertEquals(2, $result[1]['Topic']['tid']);
+		$result = $controller->$action('Week');
+		$this->assertEquals(1, $result[0]['Topic']['tid']);
+		$this->assertEquals(2, $result[1]['Topic']['tid']);
+		$result = $controller->$action('Day');
+		$this->assertEquals(1, $result[0]['Topic']['tid']);
+		$this->assertEquals(2, $result[1]['Topic']['tid']);
+	}
 }
