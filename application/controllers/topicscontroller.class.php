@@ -1,14 +1,13 @@
 <?php
 
 class TopicsController extends Controller{
-	private $userController;
-	private $answerController;
 	/*
 		fetch all information about a topic given its tid, NULL will be returned if topic does not exist.
 	*/
 	function getTopicByID($topicid){
-		$sql = "select tid, uid, title, detailes, time, scores, active from topics where tid=$topicid;"
-		$result = $this->Topic->query($sql, 1);	       if(count($result) > 0){
+		$sql = "select tid, uid, title, details, time, scores, active from topics where tid=$topicid";
+		$result = $this->Topic->query($sql, 1);	     
+		if(count($result) > 0){
 			return $result;
 		}else{
 			return NULL;
@@ -16,13 +15,43 @@ class TopicsController extends Controller{
 	}
 
 
+	
 	function show(){
+		global $variables;
 		$topicid = $_POST['tid'];
-		$topic = $this->getTopicByID($topicid);
-		
-		
+		$topicinfo = $this->getTopicByID($topicid);
+		$variables['topicinfo'] = $topicinfo;
+		if(NULL == $topicinfo)
+			return 'fail';
+		$sql = "select user.uid, user.uname from users user, topics topic where user.uid=topic.uid and topic.tid=$topicid";
+		$userinfo = $this->Topic->query($sql, 1);
+		$variables['userinfo'] = $userinfo;
+		$sql = "select answer.aid, answer.details, answer.time, user.uid, user.uname from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
+		$answers = $this->Topic->query($sql);
+		$variables['answers'] = $answers;
+		return 'success';
 	}
 
 
+	function getTopicsByUserid(){
+		global $variables;
+		$userid = $_POST['uid'];
+		$sql = "select tid, uid, title, details, time, scores, active from topics where uid='$userid' ";
+		$topics = $this->Topic->query($sql);
+		if(count($topics) == 0){
+			return 'fail';	
+		}else{
+			$variables = $topics;
+			return 'success';
+		}
+	}
+
+
+	function getHottestTopicsByType(){
+		global $variables;
+		
+
+
+	}
 
 }
