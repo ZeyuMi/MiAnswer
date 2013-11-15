@@ -10,6 +10,14 @@ include '../application/models/topic.class.php';
 include '../library/template.class.php';
 $variables = array();
 class TopicsControllerTest extends PHPUnit_Framework_TestCase{
+
+
+	function testPostTopic(){
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 10;
+	}
+
 	
 	function testGetTopicByIDSuccessfully(){
 		$controllerName = 'topics';
@@ -48,7 +56,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$result	= $controller->$action();
 		$this->assertEquals(1, $variables['topicinfo']['Topic']['tid']);	
 		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
-		$this->assertEquals('topic11', $variables['topicinfo']['Topic']['title']);	
+		$this->assertEquals('topic1', $variables['topicinfo']['Topic']['title']);	
 		$this->assertEquals('details1', $variables['topicinfo']['Topic']['details']);	
 		$this->assertEquals('2013-11-14 09:40:00', $variables['topicinfo']['Topic']['time']);	
 		$this->assertEquals(20, $variables['topicinfo']['Topic']['scores']);	
@@ -63,7 +71,8 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('2013-11-15 12:00:00', $variables['answers'][0]['Answer']['time']);
 		$this->assertEquals('u1', $variables['answers'][0]['User']['uid']);
 		$this->assertEquals('u1', $variables['answers'][0]['User']['uname']);
-		$this->assertEquals(2, $variables['answers'][0]['Answer']['aid']);
+
+		$this->assertEquals(2, $variables['answers'][1]['Answer']['aid']);
 		$this->assertEquals('answer2details', $variables['answers'][1]['Answer']['details']);
 		$this->assertEquals('2013-11-15 12:45:00', $variables['answers'][1]['Answer']['time']);
 		$this->assertEquals('u2', $variables['answers'][1]['User']['uid']);
@@ -88,49 +97,66 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 
 	/*
 	  Test getTopicsByUserid successfully
-	  getTopicsByUserid only return id of each topic
 	*/
 	function testGetTopicsByUseridSuccessfully(){
+		global $variables;
+		$_POST['uid'] = 'u1';
 		$controllerName = 'topics';
-		$action = 'getTopicByUserid';
+		$action = 'getTopicsByUserid';
 		$controller = new TopicsController($controllerName, $action);
-		$reuslt = $controller->$action('u1');
-		$this->assertEquals(1, $result['topics'][0]['Topic']['tid']);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+		$this->assertEquals(1, $variables[0]['Topic']['tid']);
+		$this->assertEquals('u1', $variables[0]['Topic']['uid']);
+		$this->assertEquals('topic1', $variables[0]['Topic']['title']);
+		$this->assertEquals('details1', $variables[0]['Topic']['details']);
+		$this->assertEquals('2013-11-14 09:40:00', $variables[0]['Topic']['time']);
+		$this->assertEquals(20, $variables[0]['Topic']['scores']);
+		$this->assertEquals(1, $variables[0]['Topic']['active']);
+		$variables = array();
 	}
 
 
 	function testGetTopicsbyUseridNoTopic(){
+		global $variables;
+		$_POST['uid'] = 'u3';
 		$controllerName = 'topics';
-		$action = 'getTopicByUserid';
+		$action = 'getTopicsByUserid';
 		$controller = new TopicsController($controllerName, $action);
-		$reuslt = $controller->$action('u3');
-		$this->assertEquals(NULL, $result);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+		$variables = array();
 	}
 
 
 	function testGetTopicsbyUseridNoUser(){
+		global $variables;
+		$_POST['uid'] = '-1';
 		$controllerName = 'topics';
-		$action = 'getTopicByUserid';
+		$action = 'getTopicsByUserid';
 		$controller = new TopicsController($controllerName, $action);
-		$reuslt = $controller->$action('-1');
-		$this->assertEquals(NULL, $result);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+		$variables = array();
 	}
 
 	/*
 	  Test function which returns hottest topics of different type including month, week and day, determined by a parameter type.
 	*/
-	function testGetHottestTopicsByType(){
-		$controllerName = 'topics';
-		$action = 'getHottestTopicsByType';
-		$controller = new TopicsController($controllerName, $action);
-		$result = $controller->$action('Month');
-		$this->assertEquals(1, $result[0]['Topic']['tid']);
-		$this->assertEquals(2, $result[1]['Topic']['tid']);
-		$result = $controller->$action('Week');
-		$this->assertEquals(1, $result[0]['Topic']['tid']);
-		$this->assertEquals(2, $result[1]['Topic']['tid']);
-		$result = $controller->$action('Day');
-		$this->assertEquals(1, $result[0]['Topic']['tid']);
-		$this->assertEquals(2, $result[1]['Topic']['tid']);
-	}
+	//function testGetHottestTopicsByType(){
+	//	global $variables;
+	//	$controllerName = 'topics';
+	//	$action = 'getHottestTopicsByType';
+	//	$controller = new TopicsController($controllerName, $action);
+	//	$result = $controller->$action('Month');
+	//	$this->assertEquals(1, $result[0]['Topic']['tid']);
+	//	$this->assertEquals(2, $result[1]['Topic']['tid']);
+	//	$result = $controller->$action('Week');
+	//	$this->assertEquals(1, $result[0]['Topic']['tid']);
+	//	$this->assertEquals(2, $result[1]['Topic']['tid']);
+	//	$result = $controller->$action('Day');
+	//	$this->assertEquals(1, $result[0]['Topic']['tid']);
+	//	$this->assertEquals(2, $result[1]['Topic']['tid']);
+	//	$variables = array();
+	//}
 }
