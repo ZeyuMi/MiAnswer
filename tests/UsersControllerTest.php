@@ -19,7 +19,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['password'] = 'u1';
 		$controllerName = 'users';
 		$action = 'login';
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('u1',$variables['uname']);
 		$this->assertEquals('u1',$_SESSION['uid']);
@@ -34,7 +34,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['password'] = 'test';
 		$controllerName = 'users';
 		$action = 'login';
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 
@@ -42,7 +42,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['password'] = 'test2';
 		$controllerName = 'users';
 		$action = 'login';
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 		$variables = array();
@@ -54,7 +54,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_GET['uid'] = 'u1';
 		$controllerName = 'users';
 		$action = 'info';
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result	= $controller->$action();
 		$this->assertEquals('u1', $variables['userinfo']['User']['uname']);
 		$this->assertEquals('description1', $variables['userinfo']['User']['description']);
@@ -74,7 +74,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_GET['uid']= 'u4';
 		$controllerName = 'users';
 		$action = "info";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('u4', $variables['userinfo']['User']['uname']);
 		$this->assertEquals('description4', $variables['userinfo']['User']['description']);
@@ -91,7 +91,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_GET['uid']= '-1';
 		$controllerName = 'users';
 		$action = "info";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 		$this->assertEquals('user does not exist.', $variables['errormessage']);
@@ -109,7 +109,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 //		$_POST['uname'] = 'u5';
 //		$controllerName = 'users';
 //		$action = "register";
-//		$controller = new UsersController($controllerName,$action);
+//		$controller = new UsersController($controllerName);
 //		$result = $controller->$action();
 //		$this->assertEquals('success', $result);	
 //		
@@ -117,7 +117,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 //		$_POST['password'] = 'u5';
 //		$controllerName = 'users';
 //		$action = 'login';
-//		$controller = new UsersController($controllerName,$action);
+//		$controller = new UsersController($controllerName);
 //		$result = $controller->$action();
 //		$this->assertEquals('u5',$variables['uname']);
 //		$this->assertEquals('success', $result);
@@ -131,7 +131,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['uname'] = 'u1';
 		$controllerName = 'users';
 		$action = "register";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);	
 		$variables = array();
@@ -140,7 +140,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 	function testValidateTrue(){
 		$controllerName = 'users';
 		$action = "validate";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('u1', 'u1');
 		$this->assertEquals(True, $result);	
 	}
@@ -148,7 +148,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 	function testValidateFalseNoUser(){
 		$controllerName = 'users';
 		$action = "validate";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('-1','test');
 		$this->assertEquals(False, $result);	
 	}
@@ -156,7 +156,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 	function testValidateFalseWrongPwd(){
 		$controllerName = 'users';
 		$action = "validate";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('u1','psw');
 		$this->assertEquals(False, $result);	
 	}
@@ -164,7 +164,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 	function testPersonalInfoSuccessfully(){
 		$controllerName = 'users';
 		$action = "personalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('u1');
 		$this->assertEquals('u1', $result['User']['uid']);
 		$this->assertEquals('u1', $result['User']['uname']);
@@ -177,7 +177,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 	function testPersonalInfoFailed(){
 		$controllerName = 'users';
 		$action = "personalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('-1');
 		$this->assertEquals(0, count($result));
 	}
@@ -187,7 +187,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['password'] = 'u1';
 		$controllerName = 'users';
 		$action = "checkIdty";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('success', $result);
 	}
@@ -197,7 +197,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['password'] = 'test';
 		$controllerName = 'users';
 		$action = "checkIdty";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 	}
@@ -236,13 +236,13 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['description'] = 'description1edit';
 		$controllerName = 'users';
 		$action = "editPersonalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('success', $result);
 
 		$controllerName = 'users';
 		$action = "personalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('u1');
 		$this->assertEquals('u1', $result['User']['uid']);
 		$this->assertEquals('u1edit', $result['User']['uname']);
@@ -257,13 +257,13 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['description'] = 'description1';
 		$controllerName = 'users';
 		$action = "editPersonalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('success', $result);
 
 		$controllerName = 'users';
 		$action = "personalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action('u1');
 		$this->assertEquals('u1', $result['User']['uid']);
 		$this->assertEquals('u1', $result['User']['uname']);
@@ -281,7 +281,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['description'] = 'description2';
 		$controllerName = 'users';
 		$action = "editPersonalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 	}
@@ -294,7 +294,7 @@ class UsersControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['description'] = 'description2';
 		$controllerName = 'users';
 		$action = "editPersonalInfo";
-		$controller = new UsersController($controllerName,$action);
+		$controller = new UsersController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 	}

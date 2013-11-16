@@ -15,6 +15,23 @@ class TopicsController extends Controller{
 	}
 
 
+	function postTopic(){
+		global $variables;
+	    $userid = $_SESSION['uid'];
+		if(NULL == $userid){
+			return 'invalidUser';
+		}
+		$title = $_POST['title'];
+		$details = $_POST['details'];
+		$scores = $_POST['scores'];
+		$sql = 'insert into topics(uid, title, details, time, scores, active) values('$userid', '$title', '$details', , $score, 1);'
+		$tags = explode(' ', $_POST['tags']); 
+		foreach($tags as $tag){
+			
+		}
+	
+
+	}
 	
 	function show(){
 		global $variables;

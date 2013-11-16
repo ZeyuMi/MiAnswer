@@ -12,13 +12,153 @@ $variables = array();
 class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 
 
-	function testPostTopic(){
+	function testPostTopicSuccessfully(){
+		global $variables;
+		$_SESSION = 'u1';
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 2;
+		$_POST['tags'] = 'tag1 tag2';
+		$controllerName = 'topics';
+		$action = 'postTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
+		$this->assertEquals('testtitle', $variables['topicinfo']['Topic']['title']);	
+		$this->assertEquals('testdetails', $variables['topicinfo']['Topic']['details']);	
+		$this->assertEquals(2, $variables['topicinfo']['Topic']['scores']);	
+		$this->assertEquals(1, $variables['topicinfo']['Topic']['active']);	
+		$this->assertEquals('tag1', $variables['tags'][0]['Tag']['tagname']);
+		$this->assertEquals('tag2', $variables['tags'][1]['Tag']['tagname']);
+		$action = 'deleteTopic';
+		$controller = new TopicController($controllerName);
+		$_POST['tid'] = $variables['tid'];
+		$controller->$action();
+		$variables = array();
+	}
+
+
+	function testPostTopicInvalidUser(){
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 2;
+		$_POST['tags'] = 'tag1 tag2';
+		$controllerName = 'topics';
+		$action = 'postTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('invalidUser', $result);
+	}
+
+
+	function testDeleteTopicSuccessfully(){
+		$global $variables;
+		$_SESSION = 'u1';
 		$_POST['title'] = 'testtitle';
 		$_POST['details'] = 'testdetails';
 		$_POST['scores'] = 10;
+		$_POST['tags'] = 'tag1 tag2';
+		$controllerName = 'topics';
+		$action = 'postTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
+		$this->assertEquals('testtitle', $variables['topicinfo']['Topic']['title']);	
+		$this->assertEquals('testdetails', $variables['topicinfo']['Topic']['details']);	
+		$this->assertEquals(2, $variables['topicinfo']['Topic']['scores']);	
+		$this->assertEquals(1, $variables['topicinfo']['Topic']['active']);	
+		$this->assertEquals('tag1', $variables['tags'][0]['Tag']['tagname']);
+		$this->assertEquals('tag2', $variables['tags'][1]['Tag']['tagname']);
+		$action = 'deleteTopic';
+		$controller = new TopicController($controllerName);
+		$_POST['tid'] = $variables['tid'];
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+		$action = 'getTopicByID';
+		$result = $controller->$action($_POST['tid']);
+		$this->assertEquals(NULL, $result);	
+		$variables = array();
+	}
+	
+
+	function testDeleteTopicInvalidUser(){
+		global $variables;
+		$_POST['tid'] = 1;
+		$controllerName = 'topics';
+		$action = 'deleteTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('fail', $result);
+		$variables = array();
 	}
 
 	
+	function testEditTopicSuccessfully(){
+		global $variables;
+		$_SESSION['uid'] = 'u1';
+		$_POST['tid'] = 1;
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 10;
+		$_POST['tags'] = 'tag1 tag2 tag3 tag4';
+		$controllerName = 'topics';
+		$action = 'editTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('success', $result);
+		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
+		$this->assertEquals('testtitle', $variables['topicinfo']['Topic']['title']);	
+		$this->assertEquals('testdetails', $variables['topicinfo']['Topic']['details']);	
+		$this->assertEquals(2, $variables['topicinfo']['Topic']['scores']);	
+		$this->assertEquals(1, $variables['topicinfo']['Topic']['active']);	
+		$this->assertEquals('tag1', $variables['tags'][0]['Tag']['tagname']);
+		$this->assertEquals('tag2', $variables['tags'][1]['Tag']['tagname']);
+		$this->assertEquals('tag3', $variables['tags'][1]['Tag']['tagname']);
+		$this->assertEquals('tag4', $variables['tags'][1]['Tag']['tagname']);
+
+		$_POST['tid'] = 1;
+		$_POST['title'] = 'topic1';
+		$_POST['details'] = 'details1';
+		$_POST['scores'] = 20;
+		$_POST['tags'] = 'tag1 tag2';
+		$result = $controller->$action();
+
+		$this->assertEquals('success', $result);
+		$variables = array();
+	}
+
+
+	function testEditTopicInvalidUser(){
+		global $variables;
+		$_POST['tid'] = 1;
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 10;
+		$_POST['tags'] = 'tag1 tag2 tag3 tag4';
+		$controllerName = 'topics';
+		$action = 'editTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('invalidUser', $result);
+		$variables = array();
+
+		$_SESSION['uid'] = 'u2';
+		$_POST['tid'] = 2;
+		$_POST['title'] = 'testtitle';
+		$_POST['details'] = 'testdetails';
+		$_POST['scores'] = 10;
+		$_POST['tags'] = 'tag1 tag2 tag3 tag4';
+		$controllerName = 'topics';
+		$action = 'editTopic';
+		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('invalidUser', $result);
+		$variables = array();
+	}
+
+
 	function testGetTopicByIDSuccessfully(){
 		$controllerName = 'topics';
 		$action = 'getTopicByID';
@@ -78,6 +218,10 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('u2', $variables['answers'][1]['User']['uid']);
 		$this->assertEquals('u2', $variables['answers'][1]['User']['uname']);
 		$this->assertEquals('success', $result);
+
+		/*test tags related to this topic*/
+		$this->assertEquals('tag1', $variables['tags'][0]['Tag']['tagname']);
+		$this->assertEquals('tag2', $variables['tags'][1]['Tag']['tagname']);
 		$variables = array();
 	}
 
@@ -103,7 +247,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['uid'] = 'u1';
 		$controllerName = 'topics';
 		$action = 'getTopicsByUserid';
-		$controller = new TopicsController($controllerName, $action);
+		$controller = new TopicsController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('success', $result);
 		$this->assertEquals(1, $variables[0]['Topic']['tid']);
@@ -122,7 +266,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['uid'] = 'u3';
 		$controllerName = 'topics';
 		$action = 'getTopicsByUserid';
-		$controller = new TopicsController($controllerName, $action);
+		$controller = new TopicsController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 		$variables = array();
@@ -134,7 +278,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$_POST['uid'] = '-1';
 		$controllerName = 'topics';
 		$action = 'getTopicsByUserid';
-		$controller = new TopicsController($controllerName, $action);
+		$controller = new TopicsController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('fail', $result);
 		$variables = array();
@@ -147,7 +291,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 	//	global $variables;
 	//	$controllerName = 'topics';
 	//	$action = 'getHottestTopicsByType';
-	//	$controller = new TopicsController($controllerName, $action);
+	//	$controller = new TopicsController($controllerName);
 	//	$result = $controller->$action('Month');
 	//	$this->assertEquals(1, $result[0]['Topic']['tid']);
 	//	$this->assertEquals(2, $result[1]['Topic']['tid']);

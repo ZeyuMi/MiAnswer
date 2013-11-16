@@ -5,9 +5,8 @@ class Controller{
 	protected $_action;
 	protected $_model;
 
-	function __construct($controller, $action){
+	function __construct($controller){
 		$this->_controller = $controller;
-		$this->_action = $action;
 		$model = trim(ucfirst($controller),'s');
 		$this->$model = new $model;
 	}
