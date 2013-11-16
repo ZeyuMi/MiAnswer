@@ -14,6 +14,6 @@ insert into topics(tid, uid, title, details, time, scores, active) values(1, 'u1
 insert into topicimages(imid, imagename, tid) values(1, 'topicimage1.jpg', 1), (2, 'topicimage2.jpg', 1), (3, 'topicimage3.jpg', 2);
 insert into answerimages(imid, imagename, aid) values(1, 'answerimage1.jpg',1), (2, 'answerimage2.jpg', 1), (3, 'answerimage3.jpg', 2);
 insert into answers(aid, uid, tid, details, time) values(1, 'u1', 1, 'answer1details', '2013-11-15 12:00:00'), (2, 'u2', 1, 'answer2details', '2013-11-15 12:45:00'),  (3, 'u3', 2, 'answer3details', '2013-11-12 21:00:00');
-insert into comments(cid, uid, aid, details, time) values(1, 'u3', 1, 'comment1', '2013-11-16 12:00:00'), (2, 'u4', 2, 'comment2', '2013-11-13 23:00:20');
+insert into comments(cid, uid, aid, details, time) values(1, 'u3', 1, 'comment1', '2013-11-16 12:00:00'),(2, 'u4', 2, 'comment2', '2013-11-13 23:00:20'), (3, 'u2', 1, 'comment3', '2013-11-16 21:00:00'), (4, 'u3', 1, 'comment4', '2013-11-15 14:00:00');
 insert into tags(tagid, tname) values (1, 'tag1'), (2, 'tag2');
 insert into topictagrelations(tid, tagid) values (1, 1), (1, 2), (2, 1);

@@ -37,6 +37,10 @@ class AnswersController extends Controller{
 			return 'invalidUser';
 		$userid = $_SESSION['uid'];
 		$aid = $_POST['aid'];
+		$sql = "select uid from answers where aid=$aid";
+		$result = $this->Answer->query($sql, 1);
+		if($result['Answer']['uid'] != $userid)
+			return 'invalidUser';
 		$sql = "delete from answers where aid=$aid";
 		$this->Answer->query($sql);
 		return 'success';
@@ -47,37 +51,15 @@ class AnswersController extends Controller{
 		global $variables;
 		if(!isset($_SESSION['uid']))
 			return 'invalidUser';
-				$userid = $_SESSION['uid'];
-		$tid = $_POST['tid'];
-		$title = $_POST['title'];
+		$userid = $_SESSION['uid'];
+		$aid = $_POST['aid'];
 		$details = $_POST['details'];
-		$scores = $_POST['scores'];
-		$tags = explode(' ', $_POST['tags']);
-		$sql = "select uid from answers where tid=$tid";
+		$sql = "select uid from answers where aid=$aid";
 		$result = $this->Answer->query($sql,1);
 		if($result['Answer']['uid'] != $userid)
 			return 'invalidUser';
 
-		$sql = "update answers set title ='$title', details = '$details', scores=$scores where tid=$tid;";
-		$this->Answer->query($sql);
-		$sql = "delete from answertagrelations where tid=$tid";
-		$this->Answer->query($sql);
-		$sql = "delete from tags t where not exists(select * from answertagrelations r where r.tagid=t.tagid)";
-		$this->Answer->query($sql);
-		foreach($tags as $tag){
-			$sql = "select tname from tags where tname='$tag'";
-			$result = $this->Answer->query($sql);
-			if(count($result) == 0){
-				$sql = "insert into tags(tname) values ('$tag');";
-				$this->Answer->query($sql);
-			}
-			$sql = "select tagid from tags where tname='$tag';";
-			$result = $this->Answer->query($sql,1);
-			$tagid = $result['Tag']['tagid'];
-			$sql = "insert into answertagrelations(tid, tagid) values($tid, $tagid);";
-			$this->Answer->query($sql);
-		}
-		$sql = "delete from tags where not exists(select * from answertagrelations r where r.tagid=tags.tagid)";
+		$sql = "update answers set details = '$details' where aid=$aid;";
 		$this->Answer->query($sql);
 
 		return 'success';
@@ -85,21 +67,18 @@ class AnswersController extends Controller{
 	
 	function show(){
 		global $variables;
-		$answerid = $_POST['tid'];
+		$answerid = $_POST['aid'];
 		$answerinfo = $this->getAnswerByID($answerid);
 		$variables['answerinfo'] = $answerinfo;
 		if(NULL == $answerinfo)
 			return 'fail';
-		$sql = "select user.uid, user.uname from users user, answers answer where user.uid=answer.uid and answer.tid=$answerid";
+		$sql = "select user.uid, user.uname from users user, answers answer where user.uid=answer.uid and answer.aid=$answerid";
 		$userinfo = $this->Answer->query($sql, 1);
-		$answerid = $answerinfo['Answer']['tid'];
 		$variables['userinfo'] = $userinfo;
-		$sql = "select answer.aid, answer.details, answer.time, user.uid, user.uname from answers answer, users user where answer.tid=$answerid and answer.uid=user.uid";
-		$answers = $this->Answer->query($sql);
-		$variables['answers'] = $answers;
-		$sql = "select tag.tname from tags tag , answertagrelations r where tag.tagid=r.tagid and r.tid=$answerid";
-		$tags = $this->Answer->query($sql);
-		$variables['tags'] = $tags;
+
+		$sql = "select * from comments where aid=$answerid";
+		$result = $this->Answer->query($sql);
+		$variables['commentnum'] = count($result);
 		return 'success';
 	}
 
@@ -107,7 +86,7 @@ class AnswersController extends Controller{
 	function getAnswersByUserid(){
 		global $variables;
 		$userid = $_POST['uid'];
-		$sql = "select tid, uid, title, details, time, scores, active from answers where uid='$userid' ";
+		$sql = "select aid, uid, details, time, accept from answers where uid='$userid' ";
 		$answers = $this->Answer->query($sql);
 		if(count($answers) == 0){
 			return 'fail';	

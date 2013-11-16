@@ -15,6 +15,32 @@ class TopicsController extends Controller{
 	}
 
 
+	function acceptAnswer(){
+		global $variables;
+		if(!isset($_SESSION['uid']))
+			return 'invalidUser';
+		$tuserid = $_SESSION['uid'];
+		$tid = $_POST['tid'];
+		$aid = $_POST['aid'];
+		$sql = "select uid from topics where tid=$tid";
+		$result = $this->Topic->query($sql, 1);
+		if($result['Topic']['uid'] != $tuserid)
+			return 'invalidUser';
+		$sql = "select uid, tid from answers where aid=$aid";
+		$result = $this->Topic->query($sql,1);
+		if(count($result) == 0 || $result['Answer']['tid'] != $tid)
+			return 'invalidAnswer';
+		$auserid = $result['Answer']['uid'];
+		$sql = "update topics set active = 0 where tid=$tid";
+		$this->Topic->query($sql);
+		$sql = "update answers set accept=1 where aid=$aid";
+		$this->Topic->query($sql);
+		$sql = "update users set scores=scores+(select scores from topics where tid=$tid) where uid='$auserid';";
+		$this->Topic->query($sql);
+		return 'success';
+	}
+
+
 	function postTopic(){
 		global $variables;
 		if(!isset($_SESSION['uid']))
@@ -55,6 +81,11 @@ class TopicsController extends Controller{
 			return 'invalidUser';
 		$userid = $_SESSION['uid'];
 		$tid = $_POST['tid'];
+		$sql = "select uid from topics where tid=$tid";
+		$result = $this->Topic->query($sql,1);
+		if($result['Topic']['uid'] != $userid)
+			return 'invalidUser';
+
 		$sql = "delete from topics where tid=$tid";
 		$this->Topic->query($sql);
 		return 'success';
@@ -65,7 +96,7 @@ class TopicsController extends Controller{
 		global $variables;
 		if(!isset($_SESSION['uid']))
 			return 'invalidUser';
-				$userid = $_SESSION['uid'];
+		$userid = $_SESSION['uid'];
 		$tid = $_POST['tid'];
 		$title = $_POST['title'];
 		$details = $_POST['details'];
@@ -111,6 +142,7 @@ class TopicsController extends Controller{
 		$sql = "select answer.aid, answer.details, answer.time, user.uid, user.uname from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
+		$variables['answersnum'] = count($answers);
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$topicid";
 		$tags = $this->Topic->query($sql);
 		$variables['tags'] = $tags;

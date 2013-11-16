@@ -11,7 +11,6 @@ include '../library/template.class.php';
 $variables = array();
 class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 
-
 	function testPostTopicSuccessfully(){
 		global $variables;
 		$_SESSION['uid'] = 'u1';
@@ -87,6 +86,14 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$controllerName = 'topics';
 		$action = 'deleteTopic';
 		$controller = new TopicsController($controllerName);
+		$result = $controller->$action();
+		$this->assertEquals('invalidUser', $result);
+		$variables = array();
+
+
+		$_POST['tid'] = 1;
+		$_SESSION['uid'] = 'u2';
+		$action = 'deleteTopic';
 		$result = $controller->$action();
 		$this->assertEquals('invalidUser', $result);
 		$variables = array();
@@ -229,6 +236,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('u1', $variables['userinfo']['User']['uname']);	
 
 		/*test answers related to this topic*/
+		$this->assertEquals(2, $variables['answersnum']);
 		$this->assertEquals(1, $variables['answers'][0]['Answer']['aid']);
 		$this->assertEquals('answer1details', $variables['answers'][0]['Answer']['details']);
 		$this->assertEquals('2013-11-15 12:00:00', $variables['answers'][0]['Answer']['time']);
