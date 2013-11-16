@@ -57,10 +57,6 @@ class TopicsController extends Controller{
 		$tid = $_POST['tid'];
 		$sql = "delete from topics where tid=$tid";
 		$this->Topic->query($sql);
-		$sql = "delete from topictagrelations where tid=$tid";
-		$this->Topic->query($sql);
-		$sql = "delete from tags where not exists(select * from topictagrelations r where r.tagid=tags.tagid)";
-		$this->Topic->query($sql);
 		return 'success';
 	}
 
@@ -84,8 +80,6 @@ class TopicsController extends Controller{
 		$this->Topic->query($sql);
 		$sql = "delete from topictagrelations where tid=$tid";
 		$this->Topic->query($sql);
-		$sql = "delete from tags t where not exists(select * from topictagrelations r where r.tagid=t.tagid)";
-		$this->Topic->query($sql);
 		foreach($tags as $tag){
 			$sql = "select tname from tags where tname='$tag'";
 			$result = $this->Topic->query($sql);
@@ -99,8 +93,6 @@ class TopicsController extends Controller{
 			$sql = "insert into topictagrelations(tid, tagid) values($tid, $tagid);";
 			$this->Topic->query($sql);
 		}
-		$sql = "delete from tags where not exists(select * from topictagrelations r where r.tagid=tags.tagid)";
-		$this->Topic->query($sql);
 
 		return 'success';
 	}
