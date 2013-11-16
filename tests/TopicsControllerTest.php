@@ -24,6 +24,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 		$controller = new TopicsController($controllerName);
 		$result = $controller->$action();
 		$this->assertEquals('success', $result);
+		$this->assertEquals(3, $variables['topicinfo']['Topic']['tid']);	
 		$this->assertEquals('u1', $variables['topicinfo']['Topic']['uid']);	
 		$this->assertEquals('testtitle', $variables['topicinfo']['Topic']['title']);	
 		$this->assertEquals('testdetails', $variables['topicinfo']['Topic']['details']);	
@@ -54,7 +55,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 
 	function testDeleteTopicSuccessfully(){
 		$global $variables;
-		$_SESSION = 'u1';
+		$_SESSION['uid'] = 'u1';
 		$_POST['title'] = 'testtitle';
 		$_POST['details'] = 'testdetails';
 		$_POST['scores'] = 10;

@@ -24,12 +24,46 @@ class TopicsController extends Controller{
 		$title = $_POST['title'];
 		$details = $_POST['details'];
 		$scores = $_POST['scores'];
-		$sql = 'insert into topics(uid, title, details, time, scores, active) values('$userid', '$title', '$details', , $score, 1);'
-		$tags = explode(' ', $_POST['tags']); 
+		$sql = "insert into topics(uid, title, details, time, scores, active) values('$userid', '$title', '$details', , $score, 1);"
+		$this->Topic->query($sql);
+		$sql = "select tid from topics where uid='$userid' and title='$title' and score=$score and active=1;";
+		$tid = ($this->Topic->query($sql,1))['Topic']['tid'];
 		foreach($tags as $tag){
-			
+			$sql = "insert into tags(tname) values ('$tag') where not exists(select * from tags where tname = '$tag');";
+			$this->Topic->query($sql);
+			$sql = "select tagid from tags where tname='$tag';"
+			$tagid = ($this->Topic->query($sql,1))['Tag']['tagid'];
+			$sql = "insert into topictagrelations(tid, tagid) values($tid, $tagid);"
+			$this->Topic->query($sql);
 		}
-	
+		$variables = getTopicByID($tid);
+	}
+
+
+	function deleteTopic(){
+		global $variables;
+		$userid = $_SESSION['uid'];
+		if(NULL == $userid){
+			return 'invalidUser';
+		}
+		$tid = $_POST['tid'];
+		$sql = "delete from topics where tid=$tid";
+		$this->Topic->query($sql);
+		return 'success';
+	}
+
+
+	function editTopic(){
+		global $variables;
+		$userid = $_SESSION['uid'];
+		if(NULL == $userid){
+			return 'invalidUser';
+		}
+		$tid = $_POST['tid'];
+		deleteTopic();
+		
+
+
 
 	}
 	
