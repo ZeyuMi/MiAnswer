@@ -15,7 +15,7 @@ class SQLQuery{
 
 	function query($sql, $singleResult = 0){
 		$this->_result = mysqli_query($this->_dbHandle, $sql);
-		if (preg_match("/select/i",$sql)) {
+		if((strcmp(gettype($this->_result), "boolean") != 0) && preg_match("/select/i",$sql)) {
 			$result = array();
 			$table = array();
 			$field = array();
@@ -43,6 +43,11 @@ class SQLQuery{
 			return($result);
 		}
 	}
+
+	function insert_id(){
+		return mysqli_insert_id($this->_dbHandle);
+	}
+
 
 	function disconnect(){
 		if(mysqli_close($this->_dbHandle))
