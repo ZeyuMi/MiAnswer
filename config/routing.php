@@ -1,6 +1,6 @@
 <?php
-$default['controller'] = 'users';
-$default['action'] = 'login';
+$default['controller'] = 'topics';
+$default['action'] = 'getHottestTopicsByType';
 
 //next is the routing table for controller's action to jump according to their result
 
@@ -17,4 +17,9 @@ $routingTable = array(
 			
 						),
 		   	),
+	'topics' => array(
+				'getHottestTopicsByType' => array(
+							'success' => 'home.php',
+						),
+			),
 );

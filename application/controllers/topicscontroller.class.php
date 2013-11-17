@@ -166,9 +166,9 @@ class TopicsController extends Controller{
 
 	function getHottestTopicsByType(){
 		global $variables;
-		
-
-
+		$sql = "select user.uid, user.smallimage, topic.tid, topic.title, topic.time, topic.scores, topic.active from users user, topics topic where topic.uid=user.uid;";
+		$variables['topics'] = $this->Topic->query($sql);	
+		return 'success';
 	}
 
 }

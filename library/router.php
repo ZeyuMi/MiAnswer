@@ -1,11 +1,11 @@
 <?php 
 setReporting();
 
-$request = $_SERVER[PATH_INFO];
-if(!isset($request)){
+if(array_key_exists('PATH_INFO', $_SERVER) == FALSE){
 	$controller = $default['controller'];
 	$action = $default['action'];
 }else{
+	$request = $_SERVER[PATH_INFO];
 	$params = explode('/', substr($request,1));
 
 	$getVar = array();
@@ -20,7 +20,7 @@ $controllerName = $controller;
 $controller = ucfirst($controller);
 $controller .= 'Controller';
 
-$controllerObject = new $controller($controllerName, $action);
+$controllerObject = new $controller($controllerName);
 $variables = array();	
 if((int)method_exists($controller, $action)){
 	$result = $controllerObject->$action();

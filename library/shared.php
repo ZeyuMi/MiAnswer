@@ -32,3 +32,8 @@ function __autoload($className) {
 		/* Error Generation Code Here */
 	}
 }
+
+
+function gettime($time){
+	return $time;
+}
