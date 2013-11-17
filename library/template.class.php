@@ -11,7 +11,9 @@ class Template{
 		global $variables;
 		extract($variables);
 
+		include(SERVER_ROOT . DS . 'public'  . DS  . 'header.php');
 		include(SERVER_ROOT . DS . 'public'  . DS  . $this->_view);
+		include(SERVER_ROOT . DS . 'public'  . DS  . 'footer.php');
 	}
 
 }

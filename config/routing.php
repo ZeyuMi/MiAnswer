@@ -7,19 +7,41 @@ $default['action'] = 'getHottestTopicsByType';
 $routingTable = array(
 	'users' => array(
 				'login' => array(
-							'success' => 'hello.php',
-							'fail'    => '',
+							'redirect' => array('controller' => 'topics',
+												'action' => 'getHottestTopicsByType',
+											),
+							'fail'    => 'error.php',
 						),
-				'signup' => array(
-
+				'register' => array(
+							'redirect' => array('controller' => 'topics',
+												'action' => 'getHottestTopicsByType',
+											),
+							'fail' => 'fail.php',
 						),
 				'info' => array(
-			
+							'success' => 'userinfo.php',
+						),
+				'logout' => array(
+							'redirect' => array('controller' => 'topics',
+												'action' => 'getHottestTopicsByType',
+											),
 						),
 		   	),
 	'topics' => array(
 				'getHottestTopicsByType' => array(
 							'success' => 'home.php',
+						),
+				'show' => array(
+							'success' => 'topicdetail.php',
+							'fail' => 'error.php'
+						),
+			),
+	'tags'	=> array(
+				'getHottestTagsByType' => array(
+							'success' => 'tags.php',
+						),
+				'show' => array(
+							'success' => 'tagdetail.php',
 						),
 			),
 );

@@ -130,7 +130,7 @@ class TopicsController extends Controller{
 	
 	function show(){
 		global $variables;
-		$topicid = $_POST['tid'];
+		$topicid = $_GET['tid'];
 		$topicinfo = $this->getTopicByID($topicid);
 		$variables['topicinfo'] = $topicinfo;
 		if(NULL == $topicinfo)
@@ -139,10 +139,16 @@ class TopicsController extends Controller{
 		$userinfo = $this->Topic->query($sql, 1);
 		$topicid = $topicinfo['Topic']['tid'];
 		$variables['userinfo'] = $userinfo;
-		$sql = "select answer.aid, answer.details, answer.time, user.uid, user.uname from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
+		$sql = "select answer.aid, answer.details, answer.time, answer.likes, answer.dislikes, user.uid, user.uname, user.description from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
 		$variables['answersnum'] = count($answers);
+		$sql = "select imagename from topicimages where tid=$topicid;";
+		$images = $this->Topic->query($sql);
+		$variables['images'] = $images;
+		$sql = "select answerimage.imagename, answerimage.aid from answerimages answerimage, answers answer  where answer.tid=$topicid and answer.aid=answerimage.aid";
+		$aimages = $this->Topic->query($sql);
+		$variables['aimages'] = $aimages;
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$topicid";
 		$tags = $this->Topic->query($sql);
 		$variables['tags'] = $tags;

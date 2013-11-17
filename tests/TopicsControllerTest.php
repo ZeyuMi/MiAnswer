@@ -219,7 +219,7 @@ class TopicsControllerTest extends PHPUnit_Framework_TestCase{
 	*/
 	function testShowSuccessfully(){
 		global $variables;
-		$_POST['tid'] = 1;
+		$_GET['tid'] = 1;
 		$controllerName = 'topics';
 		$action = 'show';
 		$controller = new TopicsController($controllerName);

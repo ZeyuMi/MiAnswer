@@ -25,7 +25,7 @@ class UsersController extends Controller{
 			$variables['uname'] = $result['User']['uname'];
 			$_SESSION['uid'] = $result['User']['uid'];
 			$_SESSION['uname'] = $result['User']['uname'];
-			return 'success';
+			return 'redirect';
 		}else{
 			$_SESSION['type'] = 'error';
 			return 'fail';
@@ -43,11 +43,11 @@ class UsersController extends Controller{
 		if(count($result) > 0){ // user exists
 			$variables['userinfo'] = $result;
 			//fetch topics related to this id
-			$sql = "select title, details, scores from topics where uid ='$userid';";
+			$sql = "select tid, title, details, scores from topics where uid ='$userid';";
 			$result = $this->User->query($sql);
 			$variables['topics'] = $result;   // user has associated topics
 			// next, fetch answers related to this id
-			$sql = "select topic.title, answer.details from topics topic, answers answer where answer.tid = topic.tid and answer.uid = '$userid';";
+			$sql = "select topic.tid, topic.title, answer.details from topics topic, answers answer where answer.tid = topic.tid and answer.uid = '$userid';";
 			$result = $this->User->query($sql);
 			$variables['answers'] = $result; // user has accociated answers
 			return 'success';
@@ -71,7 +71,14 @@ class UsersController extends Controller{
 			return 'fail';
 		$sql = "insert into users(uid, uname, password) values('$userid', '$uname', '$password');";
 		$this->User->query($sql);
-		return 'success';
+		$_SESSION['uid'] = $userid;
+		return 'redirect';
+	}
+
+
+	function logout(){
+		unset($_SESSION['uid']);
+		return 'redirect';
 	}
 
 
@@ -112,7 +119,7 @@ class UsersController extends Controller{
 	}
 	
 	function personalInfo($userid){
-		$sql = "select uid, uname, description, password, scores, level from users where uid='$userid';";
+		$sql = "select uid, uname, description, bigimage,  password, scores, level from users where uid='$userid';";
 		$result = $this->User->query($sql,1);
 		return $result;
 	}

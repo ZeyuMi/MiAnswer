@@ -1,6 +1,5 @@
 <?php 
-setReporting();
-
+//setReporting();
 if(array_key_exists('PATH_INFO', $_SERVER) == FALSE){
 	$controller = $default['controller'];
 	$action = $default['action'];
@@ -24,6 +23,17 @@ $controllerObject = new $controller($controllerName);
 $variables = array();	
 if((int)method_exists($controller, $action)){
 	$result = $controllerObject->$action();
+	while(strcmp($result, 'redirect') == 0){
+		$oldController = $controllerName;
+		$oldAction = $action;
+		$controllerName = $routingTable[$oldController][$oldAction][$result]['controller'];
+		$action = $routingTable[$oldController][$oldAction][$result]['action'];
+		$controller = ucfirst($controllerName);
+		$controller .= 'Controller';
+		$controllerObject = new $controller($controllerName);
+
+		$result = $controllerObject->$action();
+	}
 	$template =  new Template($routingTable[$controllerName][$action][$result]);
 	$template->render();
 }
