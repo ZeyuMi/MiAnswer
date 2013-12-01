@@ -28,11 +28,8 @@
 				</div>
 				<div class="modal-body">
 				<form action="http://127.0.0.1/MiAnswer/index.php/users/login" method="post" class="form-signin">
-				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="">
-				    <input type="password" class="form-control" name="password"placeholder="密码">
-			        <label class="checkbox">
-						<input type="checkbox" value="remember-me"> 记住我
-					</label>
+				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="" required="required">
+				    <input type="password" class="form-control" name="password"placeholder="密码" required="required">
 					<button class="btn btn-primary btn-block" type="submit">登录</button>
 				</form>
 				</div>
@@ -48,14 +45,11 @@
 				</div>
 				<div class="modal-body">
 				<form action="http://127.0.0.1/MiAnswer/index.php/users/register" method="post" class="form-signin">
-				    <input type="text" class="form-control" name="uid" placeholder="邮箱" autofocus="">
-				    <input type="text" class="form-control" name="uname" placeholder="用户名" autofocus="">
-				    <input type="password" class="form-control" name="password" placeholder="密码">
-				    <input type="password" class="form-control" name="passwordverify" placeholder="再次输入密码">
-			        <label class="checkbox">
-						<input type="checkbox" value="remember-me"> 记住我
-					</label>
-					<button class="btn btn-primary btn-block" type="submit">注册</button>
+				    <input type="email" class="form-control" name="uid" placeholder="邮箱" autofocus="" required="required">
+				    <input type="text" class="form-control" name="uname" placeholder="用户名" autofocus="" required="required">
+				    <input type="password" id="firstPassword" class="form-control" name="password" placeholder="密码" required="required">
+				    <input type="password" id="secondPassword" class="form-control" name="passwordverify" placeholder="再次输入密码" required="required">
+					<button id="registerbtn" class="btn btn-primary btn-block" type="submit">注册</button>
 				</form>
 				</div>
 			</div>
@@ -71,14 +65,15 @@
 				</div>
 				<div class="modal-body">
 				<form action="#" method="post" class="form-inline">
-				    <input type="text" class="form-control mywidth form-element" name="title" placeholder="写下你的问题" autofocus="">
+				    <input type="text" class="form-control mywidth form-element" name="title" placeholder="写下你的问题" autofocus="" required="required">
 					<label for="detailedInfo"> 写下详细的信息</label>
-					<textarea id="detailedInfo" name="details" class="form-control mywidth form-element" style="height:200px" ></textarea>
+					<textarea id="detailedInfo" name="details" class="form-control mywidth form-element" style="height:200px" required="required" ></textarea>
 					<label for="tags">标签</label>
-				    <input type="text" name="tags" class="form-control mywidth form-element" id="tags" placeholder="用空格分开不同的标签">
-			        <label class="checkbox">
-						<input type="checkbox" value="remember-me"> 匿名
-					</label>
+				    <input type="text" name="tags" class="form-control mywidth form-element" id="tags" placeholder="用空格分开不同的标签" required="required">
+					<label for="tags">积分</label>
+					<input type="text" class="form-control form-element" name="scores" id="scores" placeholder="你的积分" required="required">
+					<label for="inputFile">选择图片</label>
+					<input type="file" class="form-element" id="inputFile">
 					<button class="btn btn-primary btn-block" type="submit">发布</button>
 				</form>
 				</div>
@@ -88,5 +83,6 @@
 	<?}?>
 	<script src="http://127.0.0.1/MiAnswer/public/js/jquery-1.10.2.min.js"></script>
 	<script src="http://127.0.0.1/MiAnswer/public/js/bootstrap.js"></script>
+	<script src="http://127.0.0.1/MiAnswer/public/js/customjs.js"></script>
 </body>
 </html>

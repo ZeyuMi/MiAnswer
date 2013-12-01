@@ -139,7 +139,7 @@ class TopicsController extends Controller{
 		$userinfo = $this->Topic->query($sql, 1);
 		$topicid = $topicinfo['Topic']['tid'];
 		$variables['userinfo'] = $userinfo;
-		$sql = "select answer.aid, answer.details, answer.time, answer.likes, answer.dislikes, user.uid, user.uname, user.description from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
+		$sql = "select answer.aid, answer.details, answer.time, answer.accept, answer.likes, answer.dislikes, user.uid, user.uname, user.description from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
 		$variables['answersnum'] = count($answers);

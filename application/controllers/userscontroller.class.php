@@ -25,6 +25,7 @@ class UsersController extends Controller{
 			$variables['uname'] = $result['User']['uname'];
 			$_SESSION['uid'] = $result['User']['uid'];
 			$_SESSION['uname'] = $result['User']['uname'];
+			$_SESSION['description'] = $result['User']['description'];
 			return 'redirect';
 		}else{
 			$_SESSION['type'] = 'error';

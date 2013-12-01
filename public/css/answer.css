@@ -1,5 +1,41 @@
+.loadmore{
+	margin:10px;
+}
+
+.topic-element{
+	padding-top:10px;
+	padding-bottom:20px;
+	border-bottom: 1px solid #eee;
+}
+
+.topic-image{
+
+}
+
+.topic-right{
+	
+}
+
 .date-wrap{
 	color:#999;
+}
+
+
+.editable-div{
+	width:100%;
+	overflow:auto;
+}
+
+.editable-element{
+	margin-left:12px;
+	margin-top:10px;
+	border-bottom: 1px solid #eee;
+}
+
+.input-style{
+	margin:0px;
+	width:30%;
+	display:inline;
 }
 
 img{
@@ -36,6 +72,7 @@ img{
 
 .votebar{
 	position:absolute;
+	z-index:1;
 	left:22px;
 	top:17px;
 }
@@ -53,6 +90,7 @@ img{
 }
 
 .uparrow{
+	display:block;
 	position:relative;
 	height:50px;
 	width:50px;
@@ -98,12 +136,13 @@ img{
 }
 .post-btn{
 	position:relative;
-	left:660px;
+	left:730px;
 	top:0px;
 }
 
 #post-area{
-	width:760px;
-	resize:none;
 }
 
+.answer-head{
+	display:inline;
+}

@@ -19,7 +19,7 @@ $routingTable = array(
 							'fail' => 'fail.php',
 						),
 				'info' => array(
-							'success' => 'userinfo.php',
+							'success' => 'edituserinfo.php',
 						),
 				'logout' => array(
 							'redirect' => array('controller' => 'topics',
@@ -32,7 +32,7 @@ $routingTable = array(
 							'success' => 'home.php',
 						),
 				'show' => array(
-							'success' => 'topicdetail.php',
+							'success' => 'edittopicdetail.php',
 							'fail' => 'error.php'
 						),
 			),

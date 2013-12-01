@@ -42,21 +42,23 @@
 					</div>
 				</div>
 				<?}?>
-
+				<?if(isset($_SESSION['uid'])){?>
 				<div class="row">
 					<div class="post-content">
 						<div class="answer-head">
-							<a href="#">糜泽羽</a>
-							<strong>，南京大学软件学院学生。</strong>
+							<a href="#"><?=$_SESSION['uname']?></a>
+							<strong><?=$_SESSION['description']?></strong>
 							<form action="../index.php/users/register" method="post" class="form-inline">
 								<textarea id="post-area" class="form-control mywidth form-element" style="height:200px"></textarea>
-								<label id="anonymous"class="checkbox">
-									<input type="checkbox" value="remember-me"> 匿名
-								</label>
+								<div class="pull-right">
+									<label for="inputFile">选择图片</label>
+									<input type="file" class="form-element" id="inputFile">
+								</div>
 								<button class="btn btn-primary post-btn" type="submit">发布</button>
 							</form>
 						</div>
 					</div>
 				</div>
+				<?}?>
 			</div>
 

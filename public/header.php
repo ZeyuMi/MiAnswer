@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title><?echo $topicinfo['Topic']['title'];?></title>
-	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/MiAnswer/public/css/customstyle.css">
-	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/MiAnswer/public/css/signin.css">
-	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/MiAnswer/public/css/answer.css">
+	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/customstyle.css">
+	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/signin.css">
+	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/answer.css">
 </head>
 <body>
 <nav class="navbar-wrapper navbar-default navbar-inverse navbar-fixed-top" role="navigation">
