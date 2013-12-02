@@ -44,12 +44,24 @@
 				    <h4 class="form-signin-heading">填写注册信息</h4>
 				</div>
 				<div class="modal-body">
-				<form action="http://127.0.0.1/MiAnswer/index.php/users/register" method="post" class="form-signin">
-				    <input type="email" class="form-control" name="uid" placeholder="邮箱" autofocus="" required="required">
-				    <input type="text" class="form-control" name="uname" placeholder="用户名" autofocus="" required="required">
-				    <input type="password" id="firstPassword" class="form-control" name="password" placeholder="密码" required="required">
-				    <input type="password" id="secondPassword" class="form-control" name="passwordverify" placeholder="再次输入密码" required="required">
-					<button id="registerbtn" class="btn btn-primary btn-block" type="submit">注册</button>
+				<form action="http://127.0.0.1/MiAnswer/index.php/users/register" id="register-form" method="post" class="form-signin">
+				<div class="control-group">
+					<label class="control-label" for="uid"></label> 
+					<input type="email" class="form-control" id="uid" name="uid" placeholder="邮箱" autofocus="" required="required">
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="uname"></label>	
+					<input type="text" class="form-control" id="uname" name="uname" placeholder="用户名" autofocus="" required="required">
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password"></label>
+					<input type="password" id="firstPassword" class="form-control" id="password" name="password" placeholder="密码" required="required">
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="passwordverify"></label>
+					<input type="password" id="secondPassword" class="form-control" id="passwordverify" name="passwordverify" placeholder="再次输入密码" required="required">
+				</div>
+				<button id="registerbtn" class="btn btn-primary btn-block" type="submit">注册</button>
 				</form>
 				</div>
 			</div>
@@ -83,6 +95,7 @@
 	<?}?>
 	<script src="http://127.0.0.1/MiAnswer/public/js/jquery-1.10.2.min.js"></script>
 	<script src="http://127.0.0.1/MiAnswer/public/js/bootstrap.js"></script>
+	<script src="http://127.0.0.1/MiAnswer/public/js/jquery.validate.min.js"></script>
 	<script src="http://127.0.0.1/MiAnswer/public/js/customjs.js"></script>
 </body>
 </html>

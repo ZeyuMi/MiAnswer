@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/customstyle.css">
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/signin.css">
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/answer.css">
+	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/validatecss.css">
+
 </head>
 <body>
 <nav class="navbar-wrapper navbar-default navbar-inverse navbar-fixed-top" role="navigation">
