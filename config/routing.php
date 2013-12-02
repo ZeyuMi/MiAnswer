@@ -10,16 +10,16 @@ $routingTable = array(
 							'redirect' => array('controller' => 'topics',
 												'action' => 'getHottestTopicsByType',
 											),
-							'fail'    => 'error.php',
+							'fail'    => 'resignin',
 						),
 				'register' => array(
 							'redirect' => array('controller' => 'topics',
 												'action' => 'getHottestTopicsByType',
 											),
-							'fail' => 'fail.php',
+							'fail' => 'fail',
 						),
 				'info' => array(
-							'success' => 'edituserinfo.php',
+							'success' => 'edituserinfo',
 						),
 				'logout' => array(
 							'redirect' => array('controller' => 'topics',
@@ -29,19 +29,19 @@ $routingTable = array(
 		   	),
 	'topics' => array(
 				'getHottestTopicsByType' => array(
-							'success' => 'home.php',
+							'success' => 'home',
 						),
 				'show' => array(
-							'success' => 'edittopicdetail.php',
-							'fail' => 'error.php'
+							'success' => 'edittopicdetail',
+							'fail' => 'error'
 						),
 			),
 	'tags'	=> array(
 				'getHottestTagsByType' => array(
-							'success' => 'tags.php',
+							'success' => 'tags',
 						),
 				'show' => array(
-							'success' => 'tagdetail.php',
+							'success' => 'tagdetail',
 						),
 			),
 );

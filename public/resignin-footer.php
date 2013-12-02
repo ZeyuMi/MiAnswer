@@ -1,25 +1,4 @@
-			<div class="col-md-3">
-				<div class="well sidebar-nav" data-spy="affix">
-					<ul class="nav bs-sidenav">
-					<li>热门标签</li>
-					<li><a href="#">金融</a></li>
-					<li><a href="#">数学</a></li>
-					<li><a href="#">编程</a></li>
-					<li><a href="#">留学</a></li>
-					<li><a href="#">冷知识</a></li>
-					<li>热门用户</li>
-					<li><a href="#">顾扯淡</a></li>
-					<li><a href="#">yolfilm</a></li>
-					<li><a href="#">陈浩</a></li>
-					<li><a href="#">张宇辰</a></li>
-					<li><a href="#">葛巾</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-							
-	</div>
-	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

@@ -11,9 +11,18 @@ class Template{
 		global $variables;
 		extract($variables);
 
-		include(SERVER_ROOT . DS . 'public'  . DS  . 'header.php');
-		include(SERVER_ROOT . DS . 'public'  . DS  . $this->_view);
-		include(SERVER_ROOT . DS . 'public'  . DS  . 'footer.php');
+		if (file_exists(SERVER_ROOT . DS . 'public' . DS . $this->_view .  '-header.php')) {
+			include (SERVER_ROOT . DS . 'public' . DS . $this->_view .  '-header.php');
+		} else {			
+			include(SERVER_ROOT . DS . 'public'  . DS  . 'header.php');
+		}
+		include(SERVER_ROOT . DS . 'public'  . DS  . $this->_view . '.php');
+		if (file_exists(SERVER_ROOT . DS . 'public' . DS . $this->_view . '-footer.php')) {
+			include (SERVER_ROOT . DS . 'public' . DS . $this->_view .  '-footer.php');
+		} else {			
+			include(SERVER_ROOT . DS . 'public'  . DS  . 'footer.php');
+		}
+
 	}
 
 }
