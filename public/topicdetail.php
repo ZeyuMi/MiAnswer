@@ -10,7 +10,7 @@
 						<h3><?echo $topicinfo['Topic']['title'];?></h3>
 						<p><?echo $topicinfo['Topic']['details']; ?></p>
 						<?for($i = 0; $i < count($images); $i++){?>
-						<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $images[$i]['Topicimage']['imagename'];?>"></img>
+						<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $images[$i]['Image']['imagename'];?>"></img>
 						<?}?>
 				</div>
 				<?for($i = 0; $i < count($answers); $i++){?>
@@ -35,7 +35,7 @@
 							<?for($j = 0; $j < count($aimages); $j++){?>
 							<?if($aimages[$j]['Answerimage']['aid'] != $answers[$i]['Answer']['aid'])
 								continue;?>
-							<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Answerimage']['imagename'];?>"></img>
+							<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Image']['imagename'];?>"></img>
 							<?}?>
 							<span class="date-wrap"><?echo $answers[$i]['Answer']['time'];?></span>
 						</div>

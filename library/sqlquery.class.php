@@ -49,6 +49,12 @@ class SQLQuery{
 	}
 
 
+	function getNumRows($tablename){
+		$sql = "select count(*) from $tablename";
+		$num = mysqli_query($this->_dbHandle, $sql);
+		return $num;
+	}
+
 	function disconnect(){
 		if(mysqli_close($this->_dbHandle))
 			return 1;

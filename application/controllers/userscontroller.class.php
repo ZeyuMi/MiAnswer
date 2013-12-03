@@ -26,6 +26,7 @@ class UsersController extends Controller{
 			$_SESSION['uid'] = $result['User']['uid'];
 			$_SESSION['uname'] = $result['User']['uname'];
 			$_SESSION['description'] = $result['User']['description'];
+			$_SESSION['scores'] = $result['User']['scores'];
 			return 'redirect';
 		}else{
 			$_SESSION['type'] = 'error';
@@ -65,7 +66,7 @@ class UsersController extends Controller{
 		global $variables;
 		$userid = $_POST['uid'];
 		$uname = $_POST['uname'];
-		$password = $_POST['password'];
+		$password = $_POST['registerpassword'];
 		$sql = "select * from users where uid='$userid';";
 		$result = $this->User->query($sql);
 		if(count($result) > 0)

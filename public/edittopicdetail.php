@@ -11,7 +11,7 @@
 						<div style="height:600px" contentEditable="true" class="editable-div form-control form-element">
 							<?echo $topicinfo['Topic']['details']; ?>
 							<?for($i = 0; $i < count($images); $i++){?>
-								<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $images[$i]['Topicimage']['imagename'];?>"></img>
+								<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $images[$i]['Image']['imagename'];?>"></img>
 							<?}?>
 						</div>
 						<button class="btn btn-primary pull-right">确定</button>
@@ -43,7 +43,7 @@
 								<?for($j = 0; $j < count($aimages); $j++){?>
 								<?if($aimages[$j]['Answerimage']['aid'] != $answers[$i]['Answer']['aid'])
 									continue;?>
-								<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Answerimage']['imagename'];?>"></img>
+								<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Image']['imagename'];?>"></img>
 								<?}?>
 								<span class="date-wrap"><?echo $answers[$i]['Answer']['time'];?></span>
 							</div>
@@ -81,7 +81,7 @@
 							<?for($j = 0; $j < count($aimages); $j++){?>
 							<?if($aimages[$j]['Answerimage']['aid'] != $answers[$i]['Answer']['aid'])
 								continue;?>
-							<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Answerimage']['imagename'];?>"></img>
+							<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Image']['imagename'];?>"></img>
 							<?}?>
 							<span class="date-wrap"><?echo $answers[$i]['Answer']['time'];?></span>
 						</div>

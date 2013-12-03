@@ -18,8 +18,8 @@ if(array_key_exists('PATH_INFO', $_SERVER) == FALSE){
 $controllerName = $controller;
 $controller = ucfirst($controller);
 $controller .= 'Controller';
-
 $controllerObject = new $controller($controllerName);
+
 $variables = array();	
 if((int)method_exists($controller, $action)){
 	$result = $controllerObject->$action();

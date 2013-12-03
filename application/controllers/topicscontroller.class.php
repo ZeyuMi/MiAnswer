@@ -15,6 +15,19 @@ class TopicsController extends Controller{
 	}
 
 
+	function uploadImage(){
+		print 1;
+		if(is_uploaded_file($_FILES["image"]["tmp_name"])){
+			$id = $this->Topic->getNumRows('images'); 
+			$ext = pathinfo($_FILES["image"]["tmp_name"])['extension'];
+			$filename = "image$id" . $ext;
+			move_uploaded_file($FILES["image"]["tmp_name"], SERVER_ROOT . DS . 'public' . DS . 'img' . DS . $filename);
+			$sql = "insert into images(imagename) values('$filename');";
+			$this->Topic->query($sql);
+			echo $filename;
+		}
+	}
+
 	function acceptAnswer(){
 		global $variables;
 		if(!isset($_SESSION['uid']))
@@ -143,10 +156,10 @@ class TopicsController extends Controller{
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
 		$variables['answersnum'] = count($answers);
-		$sql = "select imagename from topicimages where tid=$topicid;";
+		$sql = "select image.imagename from images image, topicimages topicimage where topicimage.tid=$topicid and topicimage.imid=image.imid;";
 		$images = $this->Topic->query($sql);
 		$variables['images'] = $images;
-		$sql = "select answerimage.imagename, answerimage.aid from answerimages answerimage, answers answer  where answer.tid=$topicid and answer.aid=answerimage.aid";
+		$sql = "select image.imagename, answerimage.aid from images image, answerimages answerimage, answers answer  where answer.tid=$topicid and answer.aid=answerimage.aid and image.imid=answerimage.imid";
 		$aimages = $this->Topic->query($sql);
 		$variables['aimages'] = $aimages;
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$topicid";
