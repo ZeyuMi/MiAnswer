@@ -16,19 +16,22 @@ class AnswersController extends Controller{
 
 	function like(){
 		$uid = $_SESSION['uid'];
+		$tid = $_GET['tid'];
 		$aid = $_GET['aid'];
 		$sql = "update answers set likes=likes+1 where aid=$aid";
 		$this->Answer->query($sql);
-		$sql = "insert into likerelations(aid, uid) values($aid, '$uid');";
+		$sql = "insert into likerelations(aid, uid, tid) values($aid, '$uid', $tid);";
+		print $sql;
 		$this->Answer->query($sql);
 	}
 
 	function dislike(){
 		$uid = $_SESSION['uid'];
+		$tid = $_GET['tid'];
 		$aid = $_GET['aid'];
 		$sql = "update answers set dislikes=dislikes+1 where aid=$aid";
 		$this->Answer->query($sql);
-		$sql = "insert into dislikerelations(aid, uid) values($aid, '$uid');";
+		$sql = "insert into dislikerelations(aid, uid, tid) values($aid, '$uid', $tid);";
 		$this->Answer->query($sql);
 	}
 

@@ -15,6 +15,10 @@ class UsersController extends Controller{
 			return 'fail';	
 	}
 
+	function beforeEdit(){
+		return $this->info();
+	}
+
 	
 	function login(){
 		global $variables;
@@ -49,7 +53,7 @@ class UsersController extends Controller{
 			$result = $this->User->query($sql);
 			$variables['topics'] = $result;   // user has associated topics
 			// next, fetch answers related to this id
-			$sql = "select topic.tid, topic.title, answer.details from topics topic, answers answer where answer.tid = topic.tid and answer.uid = '$userid';";
+			$sql = "select topic.tid, topic.title, answer.details, answer.aid from topics topic, answers answer where answer.tid = topic.tid and answer.uid = '$userid';";
 			$result = $this->User->query($sql);
 			$variables['answers'] = $result; // user has accociated answers
 			return 'success';

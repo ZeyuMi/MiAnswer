@@ -87,6 +87,9 @@ class TopicsController extends Controller{
 			if(count($result) == 0){
 				$sql = "insert into tags(tname) values ('$tag');";
 				$this->Topic->query($sql);
+			}else{
+				$sql = "update tags set num = num+1 where tname='$tag';";
+				$this->Topic->query($sql);
 			}
 			$sql = "select tagid from tags where tname='$tag';";
 			$result = $this->Topic->query($sql,1);
@@ -143,6 +146,8 @@ class TopicsController extends Controller{
 		}
 		$sql = "update topics set title ='$title', details = '$details', scores=$scores where tid=$tid;";
 		$this->Topic->query($sql);
+		$sql = "update tags set num=num-1 where tagid in (select tagid from topictagrelations where tid=$tid)";
+		$this->Topic->query($sql);
 		$sql = "delete from topictagrelations where tid=$tid";
 		$this->Topic->query($sql);
 		foreach($tags as $tag){
@@ -150,6 +155,9 @@ class TopicsController extends Controller{
 			$result = $this->Topic->query($sql);
 			if(count($result) == 0){
 				$sql = "insert into tags(tname) values ('$tag');";
+				$this->Topic->query($sql);
+			}else{
+				$sql = "update tags set num=num+1 where tname='$tag'";
 				$this->Topic->query($sql);
 			}
 			$sql = "select tagid from tags where tname='$tag';";
@@ -188,9 +196,15 @@ class TopicsController extends Controller{
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
 		$variables['answersnum'] = count($answers);
-		//$sql = "select image.imagename from images image, topicimages topicimage where topicimage.tid=$topicid and topicimage.imid=image.imid;";
-		//$images = $this->Topic->query($sql);
-		//$variables['images'] = $images;
+		if(isset($_SESSION['uid'])){
+			$uid = $_SESSION['uid'];
+			$sql = "select aid from likerelations where uid='$uid' and tid=$topicid;";
+			$likes = $this->Topic->query($sql);
+			$variables['likes'] = $likes;
+			$sql = "select aid from dislikerelations where uid='$uid' and tid=$topicid;";
+			$dislikes = $this->Topic->query($sql);
+			$variables['dislikes'] = $dislikes;
+		}
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$topicid";
 		$tags = $this->Topic->query($sql);
 		$variables['tags'] = $tags;

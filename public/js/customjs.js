@@ -11,14 +11,26 @@ function fileUpload(input, divid) {
 	}
 }
 
-function like(id){
-	$.get("http://127.0.0.1/MiAnswer/index.php/answers/like", {aid : id});	
+function like(id1, id2){
+	$.get("http://127.0.0.1/MiAnswer/index.php/answers/like", {aid : id1, tid : id2});	
 }
 
-function dislike(id){
-	$.get("http://127.0.0.1/MiAnswer/index.php/answers/dislike", {aid : id});	
+function dislike(id1, id2){
+	$.get("http://127.0.0.1/MiAnswer/index.php/answers/dislike", {aid : id1, tid : id2});	
 }
 
+
+function deleteAnswer(id){
+	var element = document.getElementById('a'+id);
+	element.parentNode.removeChild(element);
+	$.post("http://127.0.0.1/MiAnswer/index.php/answers/deleteAnswer", {aid : id});
+}
+
+function deleteTopic(id){
+	var element = document.getElementById('t'+id);
+	element.parentNode.removeChild(element);
+	$.post("http://127.0.0.1/MiAnswer/index.php/topics/deleteTopic", {tid : id});
+}
 
 function init(){
 	
@@ -122,7 +134,7 @@ function init(){
     		},
     		registerpassword: {
 				required: true,
-				minlength: 3,
+				minlength: 2,
 			},
     		password2: {
      			required: true,
@@ -140,7 +152,7 @@ function init(){
 			},
 			registerpassword: {
 				required: '密码不能为空哦',
-				minlength: '请至少输入3个字符',
+				minlength: '请至少输入2个字符',
 			},
 			password2: {
 				required: '请确认密码',

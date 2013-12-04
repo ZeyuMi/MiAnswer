@@ -23,17 +23,17 @@
 					<div id="myTabContent" class="tab-content">
 					    <div class="tab-pane active" id="questions">
 							<?for($i = 0; $i < count($topics); $i++){?>
-							<div class="row editable-element">
+							<div id="t<?=$topics[$i]['Topic']['tid']?>" class="row editable-element">
 							<h3 style="display:inline"><a href="http://127.0.0.1/MiAnswer/index.php/topics/show?tid=<?echo $topics[$i]['Topic']['tid'];?>"><?echo $topics[$i]['Topic']['title']?></a></h3>
-							<button type="button" class="close pull-right" aria-hidden="true">&times;</button>
+							<button type="button"  onclick="deleteTopic(<?=$topics[$i]['Topic']['tid']?>)" class="close pull-right" aria-hidden="true">&times;</button>
 							</div>
 							<?}?>
 						</div>
 						<div class="tab-pane" id="answers">
 							<?for($i = 0; $i < count($answers); $i++){?>
-							<div class="row editable-element">
+							<div id="a<?=$answers[$i]['Answer']['aid']?>" class="row editable-element">
 							<h3 style="display:inline"><a href="http://127.0.0.1/MiAnswer/index.php/topics/show?tid=<?echo $answers[$i]['Topic']['tid'] ?>"><?echo $answers[$i]['Topic']['title'];?></a></h3>
-							<button type="button" class="close pull-right" aria-hidden="true">&times;</button>
+							<button type="button" onclick="deleteAnswer(<?=$answers[$i]['Answer']['aid']?>)" class="close pull-right" aria-hidden="true">&times;</button>
 							<p><?echo $answers[$i]['Answer']['details']?></p>
 							</div>
 							<?}?>

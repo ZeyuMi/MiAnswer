@@ -38,11 +38,11 @@
 					<div class="row">
 						<div class="answer-wrap">
 							<div class="votebar">
-								<button class="btn btn-primary uparrow">
+								<button <?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary uparrow">
 									<span class="glyphicon glyphicon-chevron-up upicon"></span>
 									<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
 								</button>
-								<button class="btn btn-primary downarrow">
+								<button <?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary downarrow">
 									<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
 									<span class="glyphicon glyphicon-chevron-down downicon"></span>			
 								</button>
@@ -73,14 +73,14 @@
 				<div class="row">
 					<div class="answer-wrap">
 						<div class="votebar">
-							<button  class="btn btn-primary uparrow">
-								<span class="glyphicon glyphicon-chevron-up upicon"></span>
-								<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
-							</button>
-							<button class="btn btn-primary downarrow">
-								<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
-								<span class="glyphicon glyphicon-chevron-down downicon"></span>			
-							</button>
+								<button <?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary uparrow">
+									<span class="glyphicon glyphicon-chevron-up upicon"></span>
+									<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
+								</button>
+								<button <?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary downarrow">
+									<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
+									<span class="glyphicon glyphicon-chevron-down downicon"></span>			
+								</button>
 						</div>
 						
 						<div class="answer-content">

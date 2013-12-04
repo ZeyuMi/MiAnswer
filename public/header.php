@@ -36,9 +36,6 @@
 				<li><a href="#"><span class="glyphicon glyphicon-star"></span>回答</a></li>
 				<li><a href="http://127.0.0.1/MiAnswer/index.php/tags/getHottestTagsByType"><span class="glyphicon glyphicon-tags"></span>标签</a></li>
 			</ul>
-			 <?if(isset($_SESSION['uid'])){?>
-			 <a class="btn btn-primary navbar-btn" href="#postquestion" data-toggle="modal">提问</a>
-			 <?}?>
 			<ul class="nav navbar-nav navbar-right">
 				<?if(!isset($_SESSION['uid'])){?>
 				<li><a href="#register" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
@@ -48,6 +45,10 @@
 				<li><a href="http://127.0.0.1/MiAnswer/index.php/users/logout"><span class="glyphicon glyphicon-asterisk"></span>退出</a></li>
 				<?}?>
 			</ul>
+
+			 <?if(isset($_SESSION['uid'])){?>
+			 <a class="btn btn-primary navbar-btn" href="#postquestion" data-toggle="modal">提问</a>
+			 <?}?>
 		</div>
 	</div>
 </nav>

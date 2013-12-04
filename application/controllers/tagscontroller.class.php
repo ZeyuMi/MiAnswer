@@ -18,7 +18,7 @@ class TagsController extends Controller{
 
 	function getHottestTagsByType(){
 		global $variables;
-		$sql = "select tag.tagid, tag.tname, tag.description from tags tag;";
+		$sql = "select tag.tagid, tag.tname, tag.description, tag.num from tags tag;";
 		$tags = $this->Tag->query($sql);
 		$variables['tags'] = $tags;
 		return 'success';

@@ -19,6 +19,9 @@ $routingTable = array(
 							'fail' => 'reregister',
 						),
 				'info' => array(
+							'success' => 'userinfo',
+						),
+				'beforeEdit' => array(
 							'success' => 'edituserinfo',
 						),
 				'logout' => array(
