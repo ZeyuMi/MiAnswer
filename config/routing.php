@@ -16,7 +16,7 @@ $routingTable = array(
 							'redirect' => array('controller' => 'topics',
 												'action' => 'getHottestTopicsByType',
 											),
-							'fail' => 'fail',
+							'fail' => 'reregister',
 						),
 				'info' => array(
 							'success' => 'edituserinfo',
@@ -32,8 +32,26 @@ $routingTable = array(
 							'success' => 'home',
 						),
 				'show' => array(
-							'success' => 'edittopicdetail',
+							'success' => 'topicdetail',
 							'fail' => 'error'
+						),
+				'postTopic' => array(
+							'redirect' => array('controller' => 'topics',
+												'action' => 'show',
+							),
+						),
+				'editTopic' => array(
+							'redirect' =>  array('controller' => 'topics',
+												'action' => 'show',
+							),
+						),
+				'beforeEdit' => array(
+							'success' => 'edittopicdetail',
+						),
+				'acceptAnswer' => array(
+							'redirect' => array( 'controller' => 'topics',
+												'action' => 'show',
+								),
 						),
 			),
 	'tags'	=> array(
@@ -42,6 +60,13 @@ $routingTable = array(
 						),
 				'show' => array(
 							'success' => 'tagdetail',
+						),
+			),
+	'answers' => array(
+				'postAnswer' => array(
+							'redirect' => array('controller' => 'topics',
+												'action' => 'show',
+								),
 						),
 			),
 );

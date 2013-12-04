@@ -14,6 +14,36 @@ class AnswersController extends Controller{
 		}
 	}
 
+	function like(){
+		$uid = $_SESSION['uid'];
+		$aid = $_GET['aid'];
+		$sql = "update answers set likes=likes+1 where aid=$aid";
+		$this->Answer->query($sql);
+		$sql = "insert into likerelations(aid, uid) values($aid, '$uid');";
+		$this->Answer->query($sql);
+	}
+
+	function dislike(){
+		$uid = $_SESSION['uid'];
+		$aid = $_GET['aid'];
+		$sql = "update answers set dislikes=dislikes+1 where aid=$aid";
+		$this->Answer->query($sql);
+		$sql = "insert into dislikerelations(aid, uid) values($aid, '$uid');";
+		$this->Answer->query($sql);
+	}
+
+	function uploadImage($name){
+		if(is_uploaded_file($_FILES[$name]["tmp_name"])){
+			$id = $this->Answer->getNumRows('images')+1; 
+			$ext = pathinfo($_FILES[$name]["name"])['extension'];
+			$filename = "image$id." . $ext;
+			move_uploaded_file($_FILES[$name]["tmp_name"], SERVER_ROOT . DS . 'public' . DS . 'img' . DS . $filename);
+			$sql = "insert into images(imid, imagename) values($id, '$filename');";
+			$this->Answer->query($sql);
+			return $filename;
+		}
+		return NULL;
+	}
 
 	function postAnswer(){
 		global $variables;
@@ -23,11 +53,17 @@ class AnswersController extends Controller{
 		$tid = $_POST['tid'];
 		$details = $_POST['details'];
 		$time = date('Y-m-d H:i:s');
+		$filename = $this->uploadImage('answerimage');
+		if(NULL != $filename){
+			$regex = "/<img src=\".*\"\\>/";
+			$replacement = "<img src=\"http://127.0.0.1/MiAnswer/public/img/$filename\"\\>";
+			$details = preg_replace($regex, $replacement, $details);
+		}
 		$sql = "insert into answers(uid, tid, details, time, accept) values('$userid', $tid, '$details', '$time', 0);";
 		$this->Answer->query($sql);
 		$aid = $this->Answer->insert_id();
-		$variables['answerinfo'] = $this->getAnswerByID($aid);
-		return 'success';
+		$_GET['tid']=$tid;
+		return 'redirect';
 	}
 
 

@@ -15,17 +15,17 @@ class TopicsController extends Controller{
 	}
 
 
-	function uploadImage(){
-		print 1;
-		if(is_uploaded_file($_FILES["image"]["tmp_name"])){
-			$id = $this->Topic->getNumRows('images'); 
-			$ext = pathinfo($_FILES["image"]["tmp_name"])['extension'];
-			$filename = "image$id" . $ext;
-			move_uploaded_file($FILES["image"]["tmp_name"], SERVER_ROOT . DS . 'public' . DS . 'img' . DS . $filename);
-			$sql = "insert into images(imagename) values('$filename');";
+	function uploadImage($name){
+		if(is_uploaded_file($_FILES[$name]["tmp_name"])){
+			$id = $this->Topic->getNumRows('images')+1; 
+			$ext = pathinfo($_FILES[$name]["name"])['extension'];
+			$filename = "image$id." . $ext;
+			move_uploaded_file($_FILES[$name]["tmp_name"], SERVER_ROOT . DS . 'public' . DS . 'img' . DS . $filename);
+			$sql = "insert into images(imid, imagename) values($id, '$filename');";
 			$this->Topic->query($sql);
-			echo $filename;
+			return $filename;
 		}
+		return NULL;
 	}
 
 	function acceptAnswer(){
@@ -33,8 +33,8 @@ class TopicsController extends Controller{
 		if(!isset($_SESSION['uid']))
 			return 'invalidUser';
 		$tuserid = $_SESSION['uid'];
-		$tid = $_POST['tid'];
-		$aid = $_POST['aid'];
+		$tid = $_GET['tid'];
+		$aid = $_GET['aid'];
 		$sql = "select uid from topics where tid=$tid";
 		$result = $this->Topic->query($sql, 1);
 		if($result['Topic']['uid'] != $tuserid)
@@ -50,8 +50,11 @@ class TopicsController extends Controller{
 		$this->Topic->query($sql);
 		$sql = "update users set scores=scores+(select scores from topics where tid=$tid) where uid='$auserid';";
 		$this->Topic->query($sql);
-		return 'success';
+		$_GET['tid'] = $tid;
+		return 'redirect';
 	}
+
+
 
 
 	function postTopic(){
@@ -64,9 +67,20 @@ class TopicsController extends Controller{
 		$scores = $_POST['scores'];
 		$tags = explode(' ', $_POST['tags']);
 		$time = date('Y-m-d H:i:s');
+		$filename = $this->uploadImage('image');	
+		if(NULL != $filename){
+			$regex = "/<img src=\".*\"\\>/";
+			$replacement = "<img src=\"http://127.0.0.1/MiAnswer/public/img/$filename\"\\>";
+			$details = preg_replace($regex, $replacement, $details);
+		}
 		$sql = "insert into topics(uid, title, details, time, scores, active) values('$userid', '$title', '$details', '$time', $scores, 1);";
 		$this->Topic->query($sql);
 		$tid = $this->Topic->insert_id();
+
+		$newScores = $_SESSION['scores'] - $scores;
+		$_SESSION['scores'] = $newScores;
+		$sql = "update users set scores=$newScores where uid='$userid'";
+		$this->Topic->query($sql);
 		foreach($tags as $tag){
 			$sql = "select tname from tags where tname='$tag'";
 			$result = $this->Topic->query($sql);
@@ -84,7 +98,8 @@ class TopicsController extends Controller{
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$tid";
 		$tags = $this->Topic->query($sql);
 		$variables['tags'] = $tags;
-		return 'success';
+		$_GET['tid'] = $tid;
+		return 'redirect';
 	}
 
 
@@ -111,15 +126,21 @@ class TopicsController extends Controller{
 			return 'invalidUser';
 		$userid = $_SESSION['uid'];
 		$tid = $_POST['tid'];
-		$title = $_POST['title'];
+		$title = $_POST['newtitle'];
 		$details = $_POST['details'];
-		$scores = $_POST['scores'];
-		$tags = explode(' ', $_POST['tags']);
+		$scores = $_POST['newscores'];
+		$oldScores = $_POST['oldscores'];
+		$tags = explode(' ', $_POST['newtags']);
 		$sql = "select uid from topics where tid=$tid";
 		$result = $this->Topic->query($sql,1);
 		if($result['Topic']['uid'] != $userid)
 			return 'invalidUser';
-
+		$filename = $this->uploadImage('newimage');	
+		if(NULL != $filename){
+			$regex = "/<img src=\".*\"\\>/";
+			$replacement = "<img src=\"http://127.0.0.1/MiAnswer/public/img/$filename\"\\>";
+			$details = preg_replace($regex, $replacement, $details);
+		}
 		$sql = "update topics set title ='$title', details = '$details', scores=$scores where tid=$tid;";
 		$this->Topic->query($sql);
 		$sql = "delete from topictagrelations where tid=$tid";
@@ -138,9 +159,20 @@ class TopicsController extends Controller{
 			$this->Topic->query($sql);
 		}
 
-		return 'success';
+		$userscores = $_SESSION['scores'] + $oldScores - $scores;
+		$_SESSION['scores'] = $userscores;
+		$sql = "update users set scores=$userscores where uid='$userid'";
+		$this->Topic->query($sql);
+
+		$_GET['tid'] = $tid;
+		return 'redirect';
 	}
 	
+	function beforeEdit(){
+		return $this->show();
+	}
+
+
 	function show(){
 		global $variables;
 		$topicid = $_GET['tid'];
@@ -152,16 +184,13 @@ class TopicsController extends Controller{
 		$userinfo = $this->Topic->query($sql, 1);
 		$topicid = $topicinfo['Topic']['tid'];
 		$variables['userinfo'] = $userinfo;
-		$sql = "select answer.aid, answer.details, answer.time, answer.accept, answer.likes, answer.dislikes, user.uid, user.uname, user.description from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid";
+		$sql = "select answer.aid, answer.details, answer.time, answer.accept, answer.likes, answer.dislikes, user.uid, user.uname, user.description from answers answer, users user where answer.tid=$topicid and answer.uid=user.uid order by answer.time asc";
 		$answers = $this->Topic->query($sql);
 		$variables['answers'] = $answers;
 		$variables['answersnum'] = count($answers);
-		$sql = "select image.imagename from images image, topicimages topicimage where topicimage.tid=$topicid and topicimage.imid=image.imid;";
-		$images = $this->Topic->query($sql);
-		$variables['images'] = $images;
-		$sql = "select image.imagename, answerimage.aid from images image, answerimages answerimage, answers answer  where answer.tid=$topicid and answer.aid=answerimage.aid and image.imid=answerimage.imid";
-		$aimages = $this->Topic->query($sql);
-		$variables['aimages'] = $aimages;
+		//$sql = "select image.imagename from images image, topicimages topicimage where topicimage.tid=$topicid and topicimage.imid=image.imid;";
+		//$images = $this->Topic->query($sql);
+		//$variables['images'] = $images;
 		$sql = "select tag.tname from tags tag , topictagrelations r where tag.tagid=r.tagid and r.tid=$topicid";
 		$tags = $this->Topic->query($sql);
 		$variables['tags'] = $tags;

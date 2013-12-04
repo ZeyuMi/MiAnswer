@@ -20,7 +20,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">MiAnswer</a>
+			<a class="navbar-brand" href="http://127.0.0.1/MiAnswer/index.php">MiAnswer</a>
 		</div>
 		<form class="navbar-form navbar-left" role="search">
 			<div class="form-group">
@@ -44,7 +44,7 @@
 				<li><a href="#register" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>注册</a></li>
 				<li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-asterisk"></span>登录</a></li>
 				<?}else{?>
-				<li><a href="#">欢迎你,<?echo $_SESSION['uid'];?></a></li>
+				<li><a href="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?=$_SESSION['uid']?>">欢迎你,<?echo $_SESSION['uid'];?></a></li>
 				<li><a href="http://127.0.0.1/MiAnswer/index.php/users/logout"><span class="glyphicon glyphicon-asterisk"></span>退出</a></li>
 				<?}?>
 			</ul>

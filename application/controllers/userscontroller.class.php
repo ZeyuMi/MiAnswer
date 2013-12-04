@@ -74,6 +74,9 @@ class UsersController extends Controller{
 		$sql = "insert into users(uid, uname, password) values('$userid', '$uname', '$password');";
 		$this->User->query($sql);
 		$_SESSION['uid'] = $userid;
+		$_SESSION['uname'] = $uname;
+		$_SESSION['description'] = "";
+		$_SESSION['scores'] = 0;
 		return 'redirect';
 	}
 

@@ -51,7 +51,8 @@ class SQLQuery{
 
 	function getNumRows($tablename){
 		$sql = "select count(*) from $tablename";
-		$num = mysqli_query($this->_dbHandle, $sql);
+		$result = mysqli_query($this->_dbHandle, $sql);
+		$num = mysqli_fetch_row($result)[0];
 		return $num;
 	}
 

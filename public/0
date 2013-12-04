@@ -29,7 +29,6 @@
 							</div>
 							<input name="oldscores" value="<?echo $topicinfo['Topic']['scores'];?>" type="hidden"/>
 							<button type="submit" class="btn btn-primary pull-right">确定</button>
-						</form>
 				</div>
 				<?if($topicinfo['Topic']['active'] == 0){?>
 				<?for($i = 0; $i < count($answers); $i++){?>
@@ -50,7 +49,7 @@
 						
 							<div class="answer-content">
 								<div class="answer-head">
-									<a class="answer-head" href="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?echo $answers[$i]['User']['uid'];?>"><?echo $answers[$i]['User']['uname'];?></a>
+									<a class="answer-head" ref="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?echo $answers[$i]['User']['uid'];?>"><?echo $answers[$i]['User']['uname'];?></a>
 									<strong><?echo $answers[$i]['User']['description'];?></strong>
 									<button class="btn btn-success pull-right active">被采纳</button>
 								</div>
@@ -85,7 +84,7 @@
 						
 						<div class="answer-content">
 							<div class="answer-head">
-								<a class="answer-head" href="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?echo $answers[$i]['User']['uid'];?>"><?echo $answers[$i]['User']['uname'];?></a>
+								<a class="answer-head" ref="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?echo $answers[$i]['User']['uid'];?>"><?echo $answers[$i]['User']['uname'];?></a>
 								<strong><?echo $answers[$i]['User']['description'];?></strong>
 								<?if(($topicinfo['Topic']['active'] == 1) && isset($_SESSION['uid']) && ($_SESSION['uid'] == $topicinfo['Topic']['uid'])){?>
 								<button class="btn btn-primary pull-right">采纳</button>
@@ -99,6 +98,24 @@
 							<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Image']['imagename'];?>"></img>
 							<?}?>
 							<span class="date-wrap"><?echo $answers[$i]['Answer']['time'];?></span>
+						</div>
+					</div>
+				</div>
+				<?}?>
+				<?if(($topicinfo['Topic']['active'] == 1) && isset($_SESSION['uid'])){?>
+				<div class="row">
+					<div class="post-content">
+						<div class="answer-head">
+							<a href="#"><?=$_SESSION['uname']?></a>
+							<strong><?=$_SESSION['description']?></strong>
+							<form action="../index.php/users/register" method="post" class="form-inline">
+								<div id="post-area" style="height:300px" contentEditable="true" class="editable-div form-control form-element"></div>
+								<div class="pull-right">
+									<label for="inputFile">选择图片</label>
+									<input type="file" class="form-element" id="inputFile">
+								</div>
+								<button class="btn btn-primary post-btn" type="submit">发布</button>
+							</form>
 						</div>
 					</div>
 				</div>

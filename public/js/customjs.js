@@ -1,69 +1,80 @@
-function fileUpload(input) {
+function fileUpload(input, divid) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
 
 		reader.onload = function (e) {
 
-			document.getElementById('detailedinfo').innerHTML += "<img src=\"" + e.target.result + "\"></img>";
+			document.getElementById(divid).innerHTML += "<img src=\"" + e.target.result + "\"\\>";
 		}
 
 		reader.readAsDataURL(input.files[0]);
 	}
-	//    // Create the iframe...
-	//    var iframe = document.createElement("iframe");
-	//	iframe.setAttribute("id", "upload_iframe");
-	//	iframe.setAttribute("name", "upload_iframe");
-	//	iframe.setAttribute("width", "0");
-	//	iframe.setAttribute("height", "0");
-	//	iframe.setAttribute("border", "0");
-	//	iframe.setAttribute("style", "width: 0; height: 0; border: none;");		 
-	//	// Add to document...
-	//	var form = $("#post-form")[0];
-	//	form.parentNode.appendChild(iframe);
-	//	window.frames['upload_iframe'].name = "upload_iframe";
-	// 
-	//	iframeId = $("#upload_iframe");
-	//										 
-	//	// Add event...
-	//	var eventHandler = function () {
-	//												 
-	//		if (iframeId.detachEvent) 
-	//			iframeId.detachEvent("onload", eventHandler);
-	//        else 
-	//			iframeId.removeEventListener("load", eventHandler, false);
-	//																		 
-    //    // Message from server...
-	//		if (iframeId.contentDocument) {
-	//			content = iframeId.contentDocument.body.innerHTML;
-	//		} else if (iframeId.contentWindow) {
-	//			content = iframeId.contentWindow.document.body.innerHTML;
-	//		} else if (iframeId.document) {
-	//			content = iframeId.document.body.innerHTML;
-	//		}
-
-	//		document.getElementById(div_id).innerHTML = content;
-
-	//		// Del the iframe...
-	//		setTimeout('iframeId.parentNode.removeChild(iframeId)', 250);
-	//	}
-
-	//	if (iframeId.addEventListener) iframeId.addEventListener("load", eventHandler, true);
-	//	if (iframeId.attachEvent) iframeId.attachEvent("onload", eventHandler);
-
-	//	// Set properties of form...
-	//	form.setAttribute("target", "upload_iframe");
-	//	form.setAttribute("action", "http://127.0.0.1/MiAnswer/topics/uploadImage");
-	//	form.setAttribute("method", "post");
-	//	form.setAttribute("enctype", "multipart/form-data");
-	//	form.setAttribute("encoding", "multipart/form-data");
-
-	//	// Submit the form...
-	//	form.submit();
 }
 
+function like(id){
+	$.get("http://127.0.0.1/MiAnswer/index.php/answers/like", {aid : id});	
+}
+
+function dislike(id){
+	$.get("http://127.0.0.1/MiAnswer/index.php/answers/dislike", {aid : id});	
+}
+
+
 function init(){
+	
 	$("#inputFile").change(function(){
-			fileUpload(this)});
+			fileUpload(this, 'detailedinfo')});
+	$("#newinputFile").change(function(){
+			fileUpload(this, 'newdetailedinfo')});
+	$("#answerinputFile").change(function(){
+			fileUpload(this, 'answerdetail')});
+	$("#answerform").validate(
+	 {
+		submitHandler: function(form){
+			var textarea = document.createElement("textarea");
+			textarea.setAttribute("name", "details");
+			var value = document.getElementById("answerdetail").innerHTML;
+			textarea.value = value;
+			form.appendChild(textarea);
+			form.submit();
+		},
+ 	});
+
+
+	$("#edit-topicform").validate(
+	 {
+  		rules: {
+    			newtitle: {
+      				required: true,
+				},
+    			newtags: {
+     				required: true,
+    			},
+   		 },
+		messages: {
+			newtitle: {
+				required: '问题不能为空哦',
+			},
+			newtags: {
+				required: '请至少添加1个标签',
+			},
+		},
+   		highlight: function(element) {
+   			 $(element).closest(".control-group").removeClass("success").addClass("danger");
+  		},
+  		success: function(element) {
+   			 element.text("OK!").addClass("valid").closest(".control-group").removeClass("danger").addClass("success");
+  		},
+		submitHandler: function(form){
+			var textarea = document.createElement("textarea");
+			textarea.setAttribute("name", "details");
+			var value = document.getElementById("newdetailedinfo").innerHTML;
+			textarea.value = value;
+			form.appendChild(textarea);
+			form.submit();
+		},
+ 	});
+
 	$("#post-form").validate(
 	 {
   		rules: {
@@ -73,9 +84,6 @@ function init(){
     			tags: {
      				required: true,
     			},
-    			scores: {
-     				number: true,
-   			 },
  		 },
 		messages: {
 			title: {
@@ -84,9 +92,6 @@ function init(){
 			tags: {
 				required: '请至少添加1个标签',
 			},
-			scores: {
-				number: '积分只能是数字哦',
-			},
 		},
    		highlight: function(element) {
    			 $(element).closest(".control-group").removeClass("success").addClass("danger");
@@ -94,6 +99,14 @@ function init(){
   		success: function(element) {
    			 element.text("OK!").addClass("valid").closest(".control-group").removeClass("danger").addClass("success");
   		},
+		submitHandler: function(form){
+			var textarea = document.createElement("textarea");
+			textarea.setAttribute("name", "details");
+			var value = document.getElementById("detailedinfo").innerHTML;
+			textarea.value = value;
+			form.appendChild(textarea);
+			form.submit();
+		},
  	});
 
 	$("#register-form").validate(
