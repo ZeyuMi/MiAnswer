@@ -228,9 +228,25 @@ class TopicsController extends Controller{
 
 	function getHottestTopicsByType(){
 		global $variables;
-		$sql = "select user.uid, user.smallimage, topic.tid, topic.title, topic.time, topic.scores, topic.active from users user, topics topic where topic.uid=user.uid;";
+		$_SESSION['hottopicpage'] = 1;
+		$sql = "select user.uid, user.smallimage, topic.tid, topic.title, topic.details, topic.time, topic.scores, topic.active from users user, topics topic where topic.uid=user.uid limit 0, 10;";
 		$variables['topics'] = $this->Topic->query($sql);	
 		return 'success';
+	}
+
+
+	function getMoreHottestTopics(){
+		if(isset($_SESSION['hottopicpage'])){
+			$page = $_SESSION['hottopicpage']+1;
+			$_SESSION['hottopicpage'] = $page;
+		}
+		else
+			return;
+		$from = ($page-1) * 10;
+		$to = $page * 10;
+		$sql = "select user.uid, user.smallimage, topic.tid, topic.title, topic.details, topic.time, topic.scores, topic.active from users user, topics topic where topic.uid=user.uid limit $from, $to;";
+		$topics = $this->Topic->query($sql);
+		echo json_encode($topics);
 	}
 
 	function search(){

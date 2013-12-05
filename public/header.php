@@ -45,8 +45,12 @@
 				<?}?>
 			</ul>
 
-			 <?if(isset($_SESSION['uid']) && $_SESSION['scores'] > 0){?>
-			 <a class="btn btn-primary navbar-btn" href="#postquestion" data-toggle="modal">提问</a>
+			 <?if(isset($_SESSION['uid'])){?>
+				 <?if($_SESSION['scores'] > 0){?>
+					<a class="btn btn-primary navbar-btn" href="#postquestion" data-toggle="modal">提问</a>
+				 <?}else{?>
+					<a class="btn btn-primary navbar-btn" href="#cannotpost" data-toggle="modal">提问</a>
+				 <?}?>
 			 <?}?>
 		</div>
 	</div>

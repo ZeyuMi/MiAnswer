@@ -29,7 +29,7 @@
 											<?}?>
 										<?}?>
 									<?}?>
-									<?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+									<?if(isset($_SESSION['uid'])){?> onclick="like(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
 										<?if(isset($likes)){?>
 										<?for($j = 0; $j < count($likes); $j++){?>
 											<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
@@ -49,7 +49,7 @@
 											<?}?>
 										<?}?>
 									<?}?>
-									<?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+									<?if(isset($_SESSION['uid'])){?> onclick="dislike(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
 										<?if(isset($dislikes)){?>
 										<?for($j = 0; $j < count($dislikes); $j++){?>
 											<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>
@@ -92,7 +92,7 @@
 										<?}?>
 									<?}?>
 								<?}?>
-								<?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn
+								<?if(isset($_SESSION['uid'])){?> onclick="like(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn
 									<?if(isset($likes)){?>
 									<?for($j = 0; $j < count($likes); $j++){?>
 										<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
@@ -112,7 +112,7 @@
 										<?}?>
 									<?}?>
 								<?}?>
-								<?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+								<?if(isset($_SESSION['uid'])){?> onclick="dislike(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
 									<?if(isset($dislikes)){?>
 									<?for($j = 0; $j < count($dislikes); $j++){?>
 										<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>

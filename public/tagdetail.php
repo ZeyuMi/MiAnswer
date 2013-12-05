@@ -17,7 +17,7 @@
 							<h4><a href="http://127.0.0.1/MiAnswer/index.php/topics/show?tid=<?echo $topics[$i]['Topic']['tid'];?>"><?echo $topics[$i]['Topic']['title']; ?></a></h4>
 						</div>
 						<div class="row">
-							<span><span class="glyphicon glyphicon-comment"></span>12个回答</spa>
+							<span><?=$topics[$i]['Topic']['details']?></span>
 						</div>
 					</div>
 				</div>

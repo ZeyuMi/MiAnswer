@@ -69,7 +69,6 @@
 			</div>
 		</div>
 	</div><!-- /.modal -->
-	<?if(isset($_SESSION['uid']) && $_SESSION['scores'] > 0){?>
 	<div class="modal fade" id="postquestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -108,7 +107,21 @@
 			</div>
 		</div>
 	</div><!-- /.modal -->
-	<?}?>
+
+	<div class="modal fade" id="cannotpost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h4 class="form-signin-heading">对不起，您不能提问</h4>
+				</div>
+				<div class="modal-body">
+					<p>您的积分为0，不能提问。请回答别人的问题，以获得足够的积分。</p>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.modal -->
+
 	<script src="http://127.0.0.1/MiAnswer/public/js/jquery-1.9.0.min.js"></script>
 	<script src="http://127.0.0.1/MiAnswer/public/js/bootstrap.js"></script>
 	<script src="http://127.0.0.1/MiAnswer/public/js/jquery.validate.min.js"></script>

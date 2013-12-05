@@ -5,7 +5,7 @@
 					<h4><?echo $userinfo['User']['uname'];?></h4>
 					<div class="row">
 						<div class="col-md-2">
-							<a href="#"><img class="pull-left" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img></a>
+							<a href="#"><img class="pull-left img-rounded" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img></a>
 						</div>
 						<div class="col-md-10" style="padding:0px">
 							<h4><?echo $userinfo['User']['uid'];?></h4>

@@ -6,7 +6,7 @@
 					<form action="http://127.0.0.1/MiAnswer/index.php/users/editPersonalInfo" id="edit-userform" enctype="multipart/form-data"  method="post">
 						<div class="col-md-2">
 							<div id="thumbnail">
-								<img class="pull-left" style="margin-bottom:20px" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img>
+								<img class="pull-left img-rounded" style="margin-bottom:20px" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img>
 							</div>
 							<label for="newinputFile">上传头像</label>
 							<input type="file" name="userimage" class="form-element"  id="inputUserImage">

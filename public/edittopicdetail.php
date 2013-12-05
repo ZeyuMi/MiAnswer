@@ -31,18 +31,50 @@
 							<button type="submit" class="btn btn-primary pull-right">确定</button>
 						</form>
 				</div>
-				<?if($topicinfo['Topic']['active'] == 0){?>
+			<?if($topicinfo['Topic']['active'] == 0){?>
 				<?for($i = 0; $i < count($answers); $i++){?>
 					<?if($answers[$i]['Answer']['accept'] == 0)
 						continue;?>
 					<div class="row">
 						<div class="answer-wrap">
 							<div class="votebar">
-								<button <?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary uparrow">
+								<button 
+									<?if(isset($likes)){?>
+										<?for($j = 0; $j < count($likes); $j++){?>
+											<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
+												disabled="disabled"
+											<?}?>
+										<?}?>
+									<?}?>
+									<?if(isset($_SESSION['uid'])){?> onclick="like(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+										<?if(isset($likes)){?>
+										<?for($j = 0; $j < count($likes); $j++){?>
+											<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
+												active
+											<?}?>
+										<?}?>
+										<?}?>
+									btn-primary uparrow">
 									<span class="glyphicon glyphicon-chevron-up upicon"></span>
 									<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
 								</button>
-								<button <?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary downarrow">
+								<button
+									<?if(isset($dislikes)){?>
+										<?for($j = 0; $j < count($dislikes); $j++){?>
+											<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>
+												disabled="disabled"
+											<?}?>
+										<?}?>
+									<?}?>
+									<?if(isset($_SESSION['uid'])){?> onclick="dislike(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+										<?if(isset($dislikes)){?>
+										<?for($j = 0; $j < count($dislikes); $j++){?>
+											<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>
+												active
+											<?}?>
+										<?}?>
+										<?}?>
+									btn-primary downarrow">
 									<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
 									<span class="glyphicon glyphicon-chevron-down downicon"></span>			
 								</button>
@@ -55,11 +87,6 @@
 									<button class="btn btn-success pull-right active">被采纳</button>
 								</div>
 								<p><?echo $answers[$i]['Answer']['details'];?></p>
-								<?for($j = 0; $j < count($aimages); $j++){?>
-								<?if($aimages[$j]['Answerimage']['aid'] != $answers[$i]['Answer']['aid'])
-									continue;?>
-								<img src="http://127.0.0.1/MiAnswer/public/img/<?echo $aimages[$j]['Image']['imagename'];?>"></img>
-								<?}?>
 								<span class="date-wrap"><?echo $answers[$i]['Answer']['time'];?></span>
 							</div>
 						</div>
@@ -67,20 +94,53 @@
 				<?}?>
 				<?}?>
 
-				<?for($i = 0; $i < count($answers); $i++){?>
+
+			<?for($i = 0; $i < count($answers); $i++){?>
 				<?if($answers[$i]['Answer']['accept'] == 1)
 					continue;?>
 				<div class="row">
 					<div class="answer-wrap">
 						<div class="votebar">
-								<button <?if(isset($_SESSION['uid'])){?> onclick="like(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary uparrow">
-									<span class="glyphicon glyphicon-chevron-up upicon"></span>
-									<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
-								</button>
-								<button <?if(isset($_SESSION['uid'])){?> onclick="dislike(<?=$answers[$i]['Answer']['aid']?>)" <?}?>  class="btn btn-primary downarrow">
-									<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
-									<span class="glyphicon glyphicon-chevron-down downicon"></span>			
-								</button>
+							<button 
+								<?if(isset($likes)){?>
+									<?for($j = 0; $j < count($likes); $j++){?>
+										<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
+											disabled="disabled"
+										<?}?>
+									<?}?>
+								<?}?>
+								<?if(isset($_SESSION['uid'])){?> onclick="like(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn
+									<?if(isset($likes)){?>
+									<?for($j = 0; $j < count($likes); $j++){?>
+										<?if($answers[$i]['Answer']['aid'] == $likes[$j]['Likerelation']['aid']){?>
+											active
+										<?}?>
+									<?}?>
+									<?}?>	
+								btn-primary uparrow">
+								<span class="glyphicon glyphicon-chevron-up upicon"></span>
+								<span class="upcount"><?echo $answers[$i]['Answer']['likes'];?></span>
+							</button>
+							<button
+								<?if(isset($dislikes)){?>
+									<?for($j = 0; $j < count($dislikes); $j++){?>
+										<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>
+											disabled="disabled"
+										<?}?>
+									<?}?>
+								<?}?>
+								<?if(isset($_SESSION['uid'])){?> onclick="dislike(this, <?=$answers[$i]['Answer']['aid']?>, <?=$topicinfo['Topic']['tid']?>)" <?}?>  class="btn 
+									<?if(isset($dislikes)){?>
+									<?for($j = 0; $j < count($dislikes); $j++){?>
+										<?if($answers[$i]['Answer']['aid'] == $dislikes[$j]['Dislikerelation']['aid']){?>
+											active
+										<?}?>
+									<?}?>
+									<?}?>
+								btn-primary downarrow">
+								<span class="downcount"><?echo $answers[$i]['Answer']['dislikes'];?></span>
+								<span class="glyphicon glyphicon-chevron-down downicon"></span>			
+							</button>
 						</div>
 						
 						<div class="answer-content">
@@ -88,7 +148,7 @@
 								<a class="answer-head" href="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?echo $answers[$i]['User']['uid'];?>"><?echo $answers[$i]['User']['uname'];?></a>
 								<strong><?echo $answers[$i]['User']['description'];?></strong>
 								<?if(($topicinfo['Topic']['active'] == 1) && isset($_SESSION['uid']) && ($_SESSION['uid'] == $topicinfo['Topic']['uid'])){?>
-								<button class="btn btn-primary pull-right">采纳</button>
+								<a href="http://127.0.0.1/MiAnswer/index.php/topics/acceptAnswer?tid=<?=$topicinfo['Topic']['tid']?>&aid=<?=$answers[$i]['Answer']['aid']?>"class="btn btn-primary pull-right">采纳</a>
 								<?}?>
 
 							</div>
@@ -103,5 +163,6 @@
 					</div>
 				</div>
 				<?}?>
+
 			</div>
 
