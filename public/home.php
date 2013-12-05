@@ -9,7 +9,7 @@
 					<div class="col-md-10">
 						<div class="row">
 							<span class="date-wrap pull-right"><?echo gettime($topics[$i]['Topic']['time']);?></span>
-							<h4><a href="http://127.0.0.1/MiAnswer/index.php/topics/show?tid=<?echo $topics[$i]['Topic']['tid'];?>"><?echo $topics[$i]['Topic']['title']; ?></a></h4>
+							<h4><a href="http://127.0.0.1/mianswer/index.php/topics/show?tid=<?echo $topics[$i]['Topic']['tid'];?>"><?echo $topics[$i]['Topic']['title']; ?></a></h4>
 						</div>
 						<div class="row">
 							<span><span class="glyphicon glyphicon-comment"></span>12个回答</spa>

@@ -2,17 +2,13 @@
 				<div class="well sidebar-nav" data-spy="affix">
 					<ul class="nav bs-sidenav">
 					<li>热门标签</li>
-					<li><a href="#">金融</a></li>
-					<li><a href="#">数学</a></li>
-					<li><a href="#">编程</a></li>
-					<li><a href="#">留学</a></li>
-					<li><a href="#">冷知识</a></li>
+					<?for($i=0; $i < count($hottags); $i++){?>
+						<li><a href="http://127.0.0.1/MiAnswer/index.php/tags/show?tagid=<?=$hottags[$i]['Tag']['tagid']?>"><?=$hottags[$i]['Tag']['tname']?></a></li>
+					<?}?>
 					<li>热门用户</li>
-					<li><a href="#">顾扯淡</a></li>
-					<li><a href="#">yolfilm</a></li>
-					<li><a href="#">陈浩</a></li>
-					<li><a href="#">张宇辰</a></li>
-					<li><a href="#">葛巾</a></li>
+					<?for($i=0; $i < count($hotusers); $i++){?>
+						<li><a href="http://127.0.0.1/MiAnswer/index.php/users/info?uid=<?=$hotusers[$i]['User']['uid']?>"><?=$hotusers[$i]['User']['uname']?></a></li>
+					<?}?>
 					</ul>
 				</div>
 			</div>
@@ -73,7 +69,7 @@
 			</div>
 		</div>
 	</div><!-- /.modal -->
-	<?if(isset($_SESSION['uid'])){?>
+	<?if(isset($_SESSION['uid']) && $_SESSION['scores'] > 0){?>
 	<div class="modal fade" id="postquestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">

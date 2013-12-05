@@ -34,6 +34,10 @@ if((int)method_exists($controller, $action)){
 
 		$result = $controllerObject->$action();
 	}
+	$usercontroller = new UsersController('users'); 
+	$usercontroller->getHottestUsers();
+	$tagscontroller = new TagsController('tags');
+	$tagscontroller->getHottestTags();
 	$template =  new Template($routingTable[$controllerName][$action][$result]);
 	$template->render();
 }

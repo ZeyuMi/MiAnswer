@@ -11,6 +11,18 @@ function fileUpload(input, divid) {
 	}
 }
 
+function uploadThumbnail(input){
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			document.getElementById("thumbnail").innerHTML = "";
+			document.getElementById("thumbnail").innerHTML += "<img style=\"margin-bottom:20px;max-width:100px;max-height:100px;min-height:100px;min-width:100px\" src=\"" + e.target.result + "\"\\>";
+		}
+
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
 function like(id1, id2){
 	$.get("http://127.0.0.1/MiAnswer/index.php/answers/like", {aid : id1, tid : id2});	
 }
@@ -33,7 +45,8 @@ function deleteTopic(id){
 }
 
 function init(){
-	
+	$("#inputUserImage").change(function(){
+			uploadThumbnail(this)});
 	$("#inputFile").change(function(){
 			fileUpload(this, 'detailedinfo')});
 	$("#newinputFile").change(function(){

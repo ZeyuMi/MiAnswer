@@ -16,12 +16,21 @@ class TagsController extends Controller{
 	}
 
 
-	function getHottestTagsByType(){
+	function getHottestTags(){
 		global $variables;
-		$sql = "select tag.tagid, tag.tname, tag.description, tag.num from tags tag;";
+		$sql = "select tag.tagid, tag.tname from tags tag order by tag.num desc limit 0, 4;";
+		$tags = $this->Tag->query($sql);
+		$variables['hottags'] = $tags;
+		return 'success';
+	}
+
+	function getAllHottestTags(){
+		global $variables;
+		$sql = "select tag.tagid, tag.tname, tag.num from tags tag order by tag.num desc";
 		$tags = $this->Tag->query($sql);
 		$variables['tags'] = $tags;
 		return 'success';
 	}
+
 
 }

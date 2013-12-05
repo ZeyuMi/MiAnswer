@@ -2,17 +2,29 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="well row">
-					<h4><?echo $userinfo['User']['uname'];?></h4>
-					<div class="row">
+				
+					<form action="http://127.0.0.1/MiAnswer/index.php/users/editPersonalInfo" id="edit-userform" enctype="multipart/form-data"  method="post">
 						<div class="col-md-2">
-							<a href="#"><img class="pull-left" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img></a>
+							<div id="thumbnail">
+								<img class="pull-left" style="margin-bottom:20px" src="http://127.0.0.1/MiAnswer/public/img/<?echo $userinfo['User']['bigimage'];?>"></img>
+							</div>
+							<label for="newinputFile">上传头像</label>
+							<input type="file" name="userimage" class="form-element"  id="inputUserImage">
+
 						</div>
-						<div class="col-md-10" style="padding:0px">
-							<h4><?echo $userinfo['User']['uid'];?></h4>
-							<input type="text" class="input-style form-control form-element" placeholder="<?echo $userinfo['User']['description'];?>"></input>
-							<button class="btn btn-primary">确定</button>
+						<div class="col-md-10">
+							<input type="hidden" id="uid" value="<?echo $userinfo['User']['uid'];?>" name="uid"/>
+							<div class="control-group">
+								<label class="control-label" for="uname">昵称</label>
+								<input type="text" id="uname" name="uname" class="form-control form-element" value="<?echo $userinfo['User']['uname'];?>"/>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="description">个人描述</label>
+								<input type="text" name="description" id="description"  class="form-control form-element" value="<?echo $userinfo['User']['description'];?>"></input>
+							</div>
+							<button type="submit" class="btn btn-primary pull-right">确定</button>
 						</div>
-					</div>
+					</form>
 				</div>
 
 				<div class="well row">

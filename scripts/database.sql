@@ -1,7 +1,7 @@
 drop database if exists MiAnswer;
 create database MiAnswer;
 use MiAnswer;
-create table users(uid varchar(255) primary key, uname varchar(255) not null, password varchar(255) not null, description varchar(255), bigimage varchar(255), smallimage varchar(255), scores int default 0, level int default 0);
+create table users(uid varchar(255) primary key, uname varchar(255) not null, password varchar(255) not null, description varchar(255), bigimage varchar(255) default 'user1big.jpg', smallimage varchar(255) default 'user1small.jpg', scores int default 10, level int default 1);
 create table topics(tid int primary key auto_increment, uid varchar(255) not null, title varchar(255) not null, details text, time datetime not null, scores int default 0, active int default 1);
 create table images(imid int primary key, imagename varchar(255) not null);
 create table topicimages(imid int, tid int, primary key(imid, tid), foreign key(imid) references images(imid) on DELETE CASCADE);

@@ -233,4 +233,51 @@ class TopicsController extends Controller{
 		return 'success';
 	}
 
+	function search(){
+		global $variables;
+		$keywords = explode(' ', $_GET['keywords']);
+
+		$sql = "select tid, title, time from topics where ";
+		foreach($keywords as $keyword){
+			$sql = $sql . "title like '%$keyword%' or ";
+		}
+		foreach($keywords as $keyword){
+			$sql = $sql . "details like '%$keyword%' or ";
+		}
+		$sql = trim($sql, 'or ');
+		$topics = $this->Topic->query($sql);
+		$variables['searchtopics'] = $topics;
+		
+		$sql = "select topic.tid, topic.title, answer.details from topics topic, answers answer where answer.tid=topic.tid and ";
+		foreach($keywords as $keyword){
+			$sql = $sql . "topic.title like '%$keyword%' or ";
+		}
+		foreach($keywords as $keyword){
+			$sql = $sql . "answer.details like '%$keyword%' or ";
+		}
+		$sql = trim($sql, 'or ');
+		$answers = $this->Topic->query($sql);
+		$variables['searchanswers'] = $answers;
+
+		$sql = "select tagid, tname, num from tags where ";
+		foreach($keywords as $keyword){
+			$sql = $sql . "tname like '%$keyword%' or ";
+		}
+		$sql = trim($sql, 'or ');
+		$tags = $this->Topic->query($sql);
+		$variables['searchtags'] = $tags;
+
+		$sql = "select uid, uname, description from users where ";
+		foreach($keywords as $keyword){
+			$sql = $sql . "uname like '%$keyword%' or ";
+		}
+		foreach($keywords as $keyword){
+			$sql = $sql . "description like '%$keyword%' or ";
+		}
+		$sql = trim($sql, 'or ');
+		$users = $this->Topic->query($sql);
+		$variables['searchusers'] = $users;
+		return 'success';		
+	}
+
 }

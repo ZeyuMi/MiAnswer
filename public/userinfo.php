@@ -31,7 +31,7 @@
 						</div>
 						<div class="tab-pane" id="answers">
 							<?for($i = 0; $i < count($answers); $i++){?>
-							<h3 id="a<?=$answers[$i]['Answer']['aid']?>"><a href="http://127.0.0.1/MiAnswer/index.php/topics/show?tid=<?echo $answers[$i]['Topic']['tid'] ?>"><?echo $answers[$i]['Topic']['title'];?></a></h3>
+							<h3 id="a<?=$answers[$i]['Answer']['aid']?>"><a href="http://127.0.0.1/mianswer/index.php/topics/show?tid=<?echo $answers[$i]['Topic']['tid'] ?>"><?echo $answers[$i]['Topic']['title'];?></a></h3>
 							<p><?echo $answers[$i]['Answer']['details']?></p>
 							<?}?>
 						</div>

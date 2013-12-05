@@ -90,18 +90,77 @@ class UsersController extends Controller{
 		return 'redirect';
 	}
 
+	function handleImage($uid, $name){
+		if(is_uploaded_file($_FILES[$name]["tmp_name"])){
+			$ext = pathinfo($_FILES[$name]["name"])['extension'];
+			$bigimagelocation = SERVER_ROOT . DS . 'public' . DS . 'img' . DS . $uid . "big.jpg"; 
+			$smallimagelocation = SERVER_ROOT . DS. 'public' . DS . 'img' . DS. $uid . "small.jpg";
+			if(file_exists($bigimagelocation)){
+				unlink($bigimagelocation);
+			}
+			if(file_exists($smallimagelocation)){
+				unlink($smallimagelocation);
+			}
+
+			switch(strtolower($_FILES[$name]['type']))
+			{
+				case 'image/jpeg':
+					$image = imagecreatefromjpeg($_FILES[$name]['tmp_name']);
+					break;
+				case 'image/png':
+					$image = imagecreatefrompng($_FILES[$name]['tmp_name']);
+					break;
+				case 'image/gif':
+					$image = imagecreatefromgif($_FILES[$name]['tmp_name']);
+					break;
+				default:
+					exit('Unsupported type: '.$_FILES[$name]['type']);
+			}
+			$old_width  = imagesx($image);
+			$old_height = imagesy($image);
+
+
+			$big_width  = 100; 
+			$big_height = 100;
+
+			$small_width  = 75; 
+			$small_height = 75;
+
+			$big = imagecreatetruecolor($big_width, $big_height);
+			$small = imagecreatetruecolor($small_width, $small_height);
+
+			imagecopyresampled($big, $image, 0, 0, 0, 0, $big_width, $big_height, $old_width, $old_height);
+			imagecopyresampled($small, $image, 0, 0, 0, 0, $small_width, $small_height, $old_width, $old_height);
+
+			imagejpeg($big, $bigimagelocation, 90);
+			imagejpeg($small, $smallimagelocation, 90);
+			imagedestroy($image);
+			imagedestroy($big);
+			imagedestroy($small);
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 	function editPersonalInfo(){
 		$userNow = $_SESSION['uid'];
 		$userid = $_POST['uid'];
 		$uname = $_POST['uname'];
-		$password = $_POST['password'];
 		$description = $_POST['description'];
+		$isuploadimage = $this->handleImage($userid, 'userimage');
 		$result = $this->exist($userid);
+
 		if($result && ($userNow == $userid)){
-			$sql = "update users set uname='$uname', password='$password', description='$description' where uid='$userid';";
+			if($isuploadimage){
+				$bigimagename = $userid . 'big.jpg';
+				$smallimagename = $userid . 'small.jpg';
+				$sql = "update users set uname='$uname', description='$description', bigimage='$bigimagename', smallimage='$smallimagename' where uid='$userid';";
+			}else{
+				$sql = "update users set uname='$uname', description='$description' where uid='$userid';";
+			}
 			$this->User->query($sql);
-			return 'success';
+			$_GET['uid'] = $userid;
+			return 'redirect';
 		}else{
 			return 'fail';
 		}
@@ -131,6 +190,14 @@ class UsersController extends Controller{
 		$sql = "select uid, uname, description, bigimage,  password, scores, level from users where uid='$userid';";
 		$result = $this->User->query($sql,1);
 		return $result;
+	}
+
+	function getHottestUsers(){
+		global $variables;
+		$sql = "select uid, uname from users order by uname limit 0, 4;";
+		$users = $this->User->query($sql);
+		$variables['hotusers'] = $users;
+		return 'success';
 	}
 
 }

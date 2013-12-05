@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title><?echo $topicinfo['Topic']['title'];?></title>
+	<title>MiAnswer</title>
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/customstyle.css">
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/signin.css">
 	<link rel="stylesheet" href="http://127.0.0.1/MiAnswer/public/css/answer.css">
@@ -22,9 +22,9 @@
 			</button>
 			<a class="navbar-brand" href="http://127.0.0.1/MiAnswer/index.php">MiAnswer</a>
 		</div>
-		<form class="navbar-form navbar-left" role="search">
+		<form action="http://127.0.0.1/MiAnswer/index.php/topics/search" method="get" class="navbar-form navbar-left" role="search">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="搜索问题、答案或人...">
+				<input type="text" class="form-control" name="keywords" placeholder="搜索问题、答案或人...">
 			</div>
 			<button type="submit" class="btn btn-default">搜索</button>
 		</form>
@@ -32,9 +32,8 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="http://127.0.0.1/MiAnswer/index.php"><span class="glyphicon glyphicon-question-sign"></span>问题</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-star"></span>回答</a></li>
-				<li><a href="http://127.0.0.1/MiAnswer/index.php/tags/getHottestTagsByType"><span class="glyphicon glyphicon-tags"></span>标签</a></li>
+				<li><a href="http://127.0.0.1/MiAnswer/index.php"><span class="glyphicon glyphicon-question-sign"></span>问题</a></li>
+				<li><a href="http://127.0.0.1/MiAnswer/index.php/tags/getAllHottestTags"><span class="glyphicon glyphicon-tags"></span>标签</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?if(!isset($_SESSION['uid'])){?>
@@ -46,7 +45,7 @@
 				<?}?>
 			</ul>
 
-			 <?if(isset($_SESSION['uid'])){?>
+			 <?if(isset($_SESSION['uid']) && $_SESSION['scores'] > 0){?>
 			 <a class="btn btn-primary navbar-btn" href="#postquestion" data-toggle="modal">提问</a>
 			 <?}?>
 		</div>

@@ -29,6 +29,12 @@ $routingTable = array(
 												'action' => 'getHottestTopicsByType',
 											),
 						),
+				'editPersonalInfo' => array(
+							'redirect' => array(
+												'controller' => 'users',
+												'action' => 'info',
+											),
+						),
 		   	),
 	'topics' => array(
 				'getHottestTopicsByType' => array(
@@ -56,9 +62,12 @@ $routingTable = array(
 												'action' => 'show',
 								),
 						),
+				'search' => array(
+							'success' => 'searchresult',
+						),
 			),
 	'tags'	=> array(
-				'getHottestTagsByType' => array(
+				'getAllHottestTags' => array(
 							'success' => 'tags',
 						),
 				'show' => array(
